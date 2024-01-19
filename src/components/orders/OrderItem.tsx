@@ -1,17 +1,23 @@
 "use client";
-import { MouseEventHandler, useState } from "react";
+import { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
+import { db } from "@/lib/firebase";
+import { deleteDoc, doc } from "firebase/firestore";
+import { UserRecord } from "firebase-admin/auth";
 
-interface OrderType {
-    location: string;
-    weight: string;
-    date: string;
-    prices: number;
-    messages?: string;
+import { OrderTypes } from "@/types";
+async function onDelete(user: UserRecord, orderId: string, setDatas: Function) {
+    try {
+        await deleteDoc(doc(db, `${user.uid}`, `${orderId}`));
+        setDatas((prevDatas: []) => prevDatas.filter((order: OrderTypes) => order.id !== orderId));
+    } catch (error) {
+        // Handle the error, e.g., display an error message
+        console.error("Error deleting order:", error);
+    }
 }
 
-export default function OrderItem({ order, onDelete }: { order: OrderType; onDelete: MouseEventHandler }) {
-    const { location, weight, date, messages, prices } = order;
+export default function OrderItem({ order, user, setOrders }: { order: OrderTypes; user: UserRecord; setOrders: Function }) {
+    const { location, weight, date, messages, prices, id } = order;
     const [showMenu, setShowMenu] = useState(false);
     return (
         <div className="flex flex-col shadow-lg bg-neutral-100 w-[80%] p-5 pl-20 max-sm:pl-10 gap-3">
@@ -19,7 +25,7 @@ export default function OrderItem({ order, onDelete }: { order: OrderType; onDel
                 <BsThreeDots className="hover:cursor-pointer w-5 h-5" onClick={() => setShowMenu(!showMenu)} />
                 {showMenu && (
                     <div className="flex flex-col text-center justify-center items-center absolute text-large w-36 h-20 bg-neutral-200 shadow-sm hover:cursor-pointer">
-                        <p onClick={onDelete} className="hover:bg-neutral-300 w-full h-1/2 flex items-center justify-center">
+                        <p onClick={() => onDelete(user, id, setOrders)} className="hover:bg-neutral-300 w-full h-1/2 flex items-center justify-center">
                             Delete
                         </p>
                         <p onClick={() => setShowMenu(false)} className="hover:bg-neutral-300 w-full h-1/2 flex items-center justify-center">

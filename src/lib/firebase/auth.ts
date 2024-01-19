@@ -1,5 +1,4 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-
 import { APIResponse } from "@/types";
 import { auth } from "@/lib/firebase/index";
 

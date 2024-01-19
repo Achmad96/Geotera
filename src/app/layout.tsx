@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
+import { getCurrentUser, isUserAuthenticated } from "@/lib/firebase/firebase-admin";
+import Providers from "@/context/Providers";
 import Navbar from "@/components/Navbar";
-import { isUserAuthenticated } from "@/lib/firebase/firebase-admin";
+import { UserRecord } from "firebase-admin/auth";
 
 export const metadata: Metadata = {
     title: "Geotera",
@@ -9,12 +12,16 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-    const isAuth = await isUserAuthenticated();
+    const isAuth: boolean | null = await isUserAuthenticated();
+    const user: UserRecord | null = await getCurrentUser();
+
     return (
         <html lang="en">
             <body>
-                <Navbar variant={isAuth ? "sign-out" : "sign-in"} />
-                {children}
+                <Providers isAuth={isAuth} currentUser={JSON.parse(JSON.stringify(user))}>
+                    <Navbar />
+                    {children}
+                </Providers>
             </body>
         </html>
     );

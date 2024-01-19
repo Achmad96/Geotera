@@ -2,14 +2,11 @@
 
 import vector from "@/assets/vector.png";
 import Image from "next/image";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ToastContainer, ToastOptions, toast, Bounce } from "react-toastify";
-import Loading from "@/app/loading";
+import { ToastContainer, ToastOptions, Bounce } from "react-toastify";
 
 export default function HomePage() {
     const router = useRouter();
-    const [isLoading, setIsLoading] = useState(true);
     const toastConfig: ToastOptions = {
         position: "top-center",
         autoClose: 3000,
@@ -23,7 +20,9 @@ export default function HomePage() {
         transition: Bounce,
     };
 
-    const handleGetStarted = () => {};
+    const handleGetStarted = () => {
+        router.push("/trash");
+    };
 
     return (
         <main className="flex max-md:flex-col-reverse justify-around items-center pt-20 max-md:pt-10">

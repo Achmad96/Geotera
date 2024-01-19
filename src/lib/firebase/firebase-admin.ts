@@ -58,6 +58,5 @@ export async function createSessionCookie(idToken: string, sessionCookieOptions:
 
 export async function revokeAllSessions(session: string) {
     const decodedIdToken = await auth.verifySessionCookie(session);
-
     return await auth.revokeRefreshTokens(decodedIdToken.sub);
 }
