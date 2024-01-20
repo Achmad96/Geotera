@@ -34,7 +34,7 @@ const SearchInput = ({ setDatas }: { setDatas: Function }) => {
 
     return (
         <div className="w-full">
-            <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search locations" className="w-[80%] outline-none border-b-1" required />
+            <input type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="search locations" className="w-[80%] outline-none border-b-1" required />
             <ul className="w-full hover:cursor-pointer">
                 {suggestions?.map((item: any, index: number) => (
                     <li

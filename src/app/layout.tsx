@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const isAuth: boolean | null = await isUserAuthenticated();
     const user: UserRecord | null = await getCurrentUser();
-
     return (
         <html lang="en">
             <body>

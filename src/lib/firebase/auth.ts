@@ -27,7 +27,6 @@ export async function signInWithGoogle() {
 export async function signOut() {
     try {
         await auth.signOut();
-
         const response = await fetch("/api/auth/sign-out", {
             headers: {
                 "Content-Type": "application/json",

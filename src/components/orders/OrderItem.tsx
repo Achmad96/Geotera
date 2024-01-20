@@ -1,23 +1,22 @@
 "use client";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { db } from "@/lib/firebase";
 import { deleteDoc, doc } from "firebase/firestore";
 import { UserRecord } from "firebase-admin/auth";
-
 import { OrderTypes } from "@/types";
+
 async function onDelete(user: UserRecord, orderId: string, setDatas: Function) {
     try {
         await deleteDoc(doc(db, `${user.uid}`, `${orderId}`));
         setDatas((prevDatas: []) => prevDatas.filter((order: OrderTypes) => order.id !== orderId));
     } catch (error) {
-        // Handle the error, e.g., display an error message
         console.error("Error deleting order:", error);
     }
 }
 
-export default function OrderItem({ order, user, setOrders }: { order: OrderTypes; user: UserRecord; setOrders: Function }) {
-    const { location, weight, date, messages, prices, id } = order;
+const OrderItem = memo(({ order, user, setOrders }: { order: OrderTypes; user: UserRecord; setOrders: Function }) => {
+    const { location, weight, date, messages, prices, id, complete } = order;
     const [showMenu, setShowMenu] = useState(false);
     return (
         <div className="flex flex-col shadow-lg bg-neutral-100 w-[80%] p-5 pl-20 max-sm:pl-10 gap-3">
@@ -34,27 +33,35 @@ export default function OrderItem({ order, user, setOrders }: { order: OrderType
                     </div>
                 )}
             </div>
-            <div className="flex flex-col gap-5">
-                <div className="flex gap-14">
+            <div className="flex gap-10">
+                <div className="flex flex-col gap-5 font-bold">
                     <p>Location</p>
-                    <p>{location}</p>
-                </div>
-                <div className="flex gap-16">
+                    <p>Date</p>
                     <p>Weight</p>
-                    <p>{weight} g</p>
-                </div>
-                {messages && (
-                    <div className="flex gap-[4.5rem] mb-5">
-                        <p>Notes</p>
-                        <p>{messages}</p>
-                    </div>
-                )}
-                <div className="flex gap-[4.5rem]">
+                    {messages && <p>Notes</p>}
                     <p>Prices</p>
+                </div>
+                <div className="flex flex-col gap-5">
+                    <p>{location}</p>
+                    <p>{date}</p>
+                    <p>{weight} g</p>
+                    {messages && <p>{messages}</p>}
                     <p> Rp {prices}</p>
                 </div>
             </div>
-            <div className="w-full flex justify-end text-xs">{date}</div>
+            <div className="w-full flex justify-end text-xs">
+                {complete ? (
+                    <div className="bg-green-500 text-slate-100 p-2 px-5 rounded-full font-bold">
+                        <p>Complete</p>
+                    </div>
+                ) : (
+                    <div className="bg-red-500 text-slate-100 p-2 px-5 rounded-full font-bold">
+                        <p>Pending</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
-}
+});
+
+export default OrderItem;
