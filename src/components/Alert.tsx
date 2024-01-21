@@ -9,11 +9,9 @@ export default function Alert({ title, message, visible, callback }: { title: st
     if (isVisible) {
         return (
             <div className="flex absolute left-0 right-0 top-0 bottom-0 w-full h-[90dvh] justify-center items-center">
-                <div className="flex absolute flex-col p-10 gap-10 bg-white shadow-2xl w-[30%] max-lg:w-[80%] rounded-xl">
+                <div className="flex absolute flex-col p-10 gap-10 bg-white shadow-2xl w-[30%] max-sm:gap-7 max-lg:w-[80%] rounded-xl">
                     <div className="flex flex-col gap-2">
-                        <h1 className="text-2xl font-bold" id="confirmation-dialog">
-                            {title}
-                        </h1>
+                        <h1 className="text-2xl font-bold">{title}</h1>
                         <p id="confirmation-message">{message}</p>
                     </div>
                     <div className="flex gap-10 justify-center">
