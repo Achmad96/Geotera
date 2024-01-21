@@ -45,7 +45,7 @@ export default function OrdersPage() {
             const searchLowerCase = searchValue.toLowerCase();
             const filteredOrders = orders.filter(
                 (order: OrderTypes) =>
-                    order.location.toLowerCase().includes(searchLowerCase) || order.messages?.toLowerCase().includes(searchLowerCase) || order.date.toLowerCase().includes(searchLowerCase)
+                    order.location.toLowerCase().includes(searchLowerCase) || order.notes?.toLowerCase().includes(searchLowerCase) || order.date.toLowerCase().includes(searchLowerCase)
             );
 
             setSearchTerm(filteredOrders);
@@ -57,7 +57,7 @@ export default function OrdersPage() {
 
     const renderOrderList = (orderList: OrderTypes[]) =>
         orderList.map((order: OrderTypes) => (
-            <motion.li key={order.id} className="flex flex-col gap-5 items-center justify-center w-full" animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.li key={order.id} className="flex flex-col items-center justify-center w-full" animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                 <OrderItem order={order} user={currentUser} setOrders={setOrders} />
             </motion.li>
         ));
@@ -72,14 +72,16 @@ export default function OrdersPage() {
                 </span>
                 <input
                     className="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
-                    placeholder="Search for orders"
+                    placeholder="Search for orders by location, date, and notes"
                     type="text"
                     name="search"
                     autoComplete="off"
                     onChange={e => debouncedSearch(e.target.value)}
                 />
             </label>
-            <AnimatePresence>{searchTerm.length > 0 ? renderOrderList(searchTerm) : <p>Temporarily no orders</p>}</AnimatePresence>
+            <div className="flex flex-col w-full gap-5 justify-center items-center">
+                <AnimatePresence>{searchTerm.length > 0 ? renderOrderList(searchTerm) : <p>Temporarily no orders</p>}</AnimatePresence>
+            </div>
         </div>
     );
 }

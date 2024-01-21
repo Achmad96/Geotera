@@ -69,7 +69,7 @@ export default function Trash() {
             </div>
             <div className="flex flex-col justify-start gap-5">
                 <p>Notes (Optional)</p>
-                <textarea placeholder="Notes to rubbish collectors" onChange={e => setFormDatas({ ...formDatas, messages: e.target.value })} className="w-[80%] min-h-20 outline-none border-b" />
+                <textarea placeholder="Notes to rubbish collectors" onChange={e => setFormDatas({ ...formDatas, notes: e.target.value })} className="w-[80%] min-h-20 outline-none border-b" />
             </div>
             <button
                 type="submit"

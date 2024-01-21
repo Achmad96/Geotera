@@ -6,5 +6,5 @@ export interface OrderTypes {
     weight: number;
     prices: number;
     complete: boolean;
-    messages?: string;
+    notes?: string;
 }

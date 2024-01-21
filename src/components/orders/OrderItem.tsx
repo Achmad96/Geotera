@@ -16,7 +16,7 @@ async function onDelete(user: UserRecord, orderId: string, setDatas: Function) {
 }
 
 const OrderItem = memo(({ order, user, setOrders }: { order: OrderTypes; user: UserRecord; setOrders: Function }) => {
-    const { location, weight, date, messages, prices, id, complete } = order;
+    const { location, weight, date, notes, prices, id, complete } = order;
     const [showMenu, setShowMenu] = useState(false);
     return (
         <div className="flex flex-col shadow-lg bg-neutral-100 w-[80%] p-5 pl-20 max-sm:pl-10 gap-3">
@@ -33,7 +33,7 @@ const OrderItem = memo(({ order, user, setOrders }: { order: OrderTypes; user: U
                     </div>
                 )}
             </div>
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-5">
                 <div className="flex gap-10">
                     <p className="font-bold">Location</p>
                     <p>{location}</p>
@@ -46,10 +46,10 @@ const OrderItem = memo(({ order, user, setOrders }: { order: OrderTypes; user: U
                     <p className="font-bold">Weight</p>
                     <p>{weight} g</p>
                 </div>
-                {messages && (
+                {notes && (
                     <div className="flex gap-14">
                         <p className="font-bold">Notes</p>
-                        <p>{messages}</p>
+                        <p>{notes}</p>
                     </div>
                 )}
                 <div className="flex gap-14">
