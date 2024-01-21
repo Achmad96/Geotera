@@ -33,19 +33,27 @@ const OrderItem = memo(({ order, user, setOrders }: { order: OrderTypes; user: U
                     </div>
                 )}
             </div>
-            <div className="flex gap-10">
-                <div className="flex flex-col gap-5 font-bold">
-                    <p>Location</p>
-                    <p>Date</p>
-                    <p>Weight</p>
-                    {messages && <p>Notes</p>}
-                    <p>Prices</p>
-                </div>
-                <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-10">
+                <div className="flex gap-10">
+                    <p className="font-bold">Location</p>
                     <p>{location}</p>
+                </div>
+                <div className="flex gap-16">
+                    <p className="font-bold">Date</p>
                     <p>{date}</p>
+                </div>
+                <div className="flex gap-12">
+                    <p className="font-bold">Weight</p>
                     <p>{weight} g</p>
-                    {messages && <p>{messages}</p>}
+                </div>
+                {messages && (
+                    <div className="flex gap-14">
+                        <p className="font-bold">Notes</p>
+                        <p>{messages}</p>
+                    </div>
+                )}
+                <div className="flex gap-14">
+                    <p className="font-bold">Prices</p>
                     <p> Rp {prices}</p>
                 </div>
             </div>

@@ -1,7 +1,7 @@
-import vector from "@/assets/vector.png";
-import GetStartedButton from "@/components/GetStartedButton";
-import Image from "next/image";
 import { ToastContainer, ToastOptions, Bounce } from "react-toastify";
+import Image from "next/image";
+import GetStartedButton from "@/components/button/GetStartedButton";
+import Vector from "@/assets/vector.png";
 
 export default function HomePage() {
     const toastConfig: ToastOptions = {
@@ -29,7 +29,7 @@ export default function HomePage() {
                     <GetStartedButton />
                 </div>
             </div>
-            <Image src={vector} alt="vector" priority className="w-[25rem] h-[25rem] max-sm:w-52 max-sm:h-52 max-md:w-72 max-md:h-72" />
+            <Image src={Vector} alt="Vector" priority className="w-[25rem] h-[25rem] max-sm:w-52 max-sm:h-52 max-md:w-72 max-md:h-72" />
         </main>
     );
 }

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import geotera from "@/assets/geotera.png";
 import Link from "next/link";
-import SignInOutButton from "@/components/SignInOutButton";
+import SignInOutButton from "@/components/button/SignInOutButton";
 
 export default async function Navbar() {
     return (

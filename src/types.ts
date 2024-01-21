@@ -2,9 +2,9 @@ export type APIResponse<T = object> = { success: true; data: T } | { success: fa
 export interface OrderTypes {
     id: string;
     location: string;
-    prices: number;
     date: string;
     weight: number;
+    prices: number;
     complete: boolean;
     messages?: string;
 }
