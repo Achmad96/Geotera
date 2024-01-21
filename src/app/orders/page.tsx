@@ -65,7 +65,7 @@ export default function OrdersPage() {
     return (
         <div className="flex flex-col items-center py-5 min-h-[90vh] gap-7 h-auto w-full">
             <h1 className="text-4xl">Orders</h1>
-            <label className="relative block w-[50%]">
+            <label className="relative block w-[50%] max-lg:w-[80%]">
                 <span className="sr-only">Search</span>
                 <span className="absolute inset-y-0 left-0 flex items-center pl-2">
                     <CiSearch className="h-5 w-5 fill-slate-300" />
