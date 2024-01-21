@@ -10,7 +10,7 @@ import { toastConfiguration } from "@/utils/ToastConfig";
 import { OrderTypes } from "@/types";
 import { UserRecord } from "firebase-admin/auth";
 
-import ConfirmAlert from "@/components/trash/ConfirmAlert";
+import Alert from "@/components/Alert";
 import SearchInput from "@/components/trash/SearchInput";
 
 export default function Trash() {
@@ -46,9 +46,8 @@ export default function Trash() {
 
     return (
         <form onSubmit={validate} className="flex w-full flex-col pl-32 max-sm:pl-10 py-10 gap-10 min-h-64 h-auto">
-            <ConfirmAlert title={"Confirmation"} message={"Do you want to confirm?"} visible={[isVisible, setVisible]} callback={add_order} />
+            <Alert title={"Confirmation"} message={"The data cannot be edited later, will you confirm it?"} visible={[isVisible, setVisible]} callback={add_order} />
             <ToastContainer {...toastConfiguration} />
-
             <div className="flex flex-col justify-start gap-5">
                 <p>Location</p>
                 <SearchInput setDatas={setFormDatas} />
