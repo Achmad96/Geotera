@@ -56,7 +56,7 @@ export default function Trash() {
             <div className="flex justify-start items-end gap-5">
                 <div className="flex flex-col w-[63%]">
                     <p>Weight (g)</p>
-                    <input type="number" placeholder="how much does the trash weigh?" onChange={handleWeightChange} className="w-full h-10 outline-none border-b" min={0} required />
+                    <input type="number" placeholder="Garbage weight" onChange={handleWeightChange} className="w-full h-10 outline-none border-b" min={0} required />
                 </div>
                 <div className="flex gap-3 items-center w-full">
                     <p>Rp</p>
@@ -69,7 +69,7 @@ export default function Trash() {
             </div>
             <div className="flex flex-col justify-start gap-5">
                 <p>Notes (Optional)</p>
-                <textarea placeholder="messages" onChange={e => setFormDatas({ ...formDatas, messages: e.target.value })} className="w-[80%] min-h-20 outline-none border-b" />
+                <textarea placeholder="Notes to rubbish collectors" onChange={e => setFormDatas({ ...formDatas, messages: e.target.value })} className="w-[80%] min-h-20 outline-none border-b" />
             </div>
             <button
                 type="submit"

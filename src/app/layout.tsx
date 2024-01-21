@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
 import { getCurrentUser, isUserAuthenticated } from "@/lib/firebase/firebase-admin";
+import { UserRecord } from "firebase-admin/auth";
+import { Suspense } from "react";
+
 import Providers from "@/context/Providers";
 import Navbar from "@/components/Navbar";
-import { UserRecord } from "firebase-admin/auth";
+import Loading from "./loading";
 
 export const metadata: Metadata = {
     title: "Geotera",
@@ -17,10 +20,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     return (
         <html lang="en">
             <body>
-                <Providers isAuth={isAuth} currentUser={JSON.parse(JSON.stringify(user))}>
-                    <Navbar />
-                    {children}
-                </Providers>
+                <Suspense fallback={<Loading />}>
+                    <Providers isAuth={isAuth} currentUser={JSON.parse(JSON.stringify(user))}>
+                        <Navbar />
+                        {children}
+                    </Providers>
+                </Suspense>
             </body>
         </html>
     );
