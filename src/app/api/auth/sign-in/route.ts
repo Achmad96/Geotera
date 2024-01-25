@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { APIResponse } from "@/types";
+import { APIResponse } from "@/TypesNInterfaces";
 import { createSessionCookie } from "@/lib/firebase/firebase-admin";
 
 export async function POST(request: NextRequest) {

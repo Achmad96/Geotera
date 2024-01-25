@@ -1,9 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-* {
-    scroll-behavior: smooth;
+@layer base {
+    html,
+    body {
+        scroll-behavior: smooth;
+        scroll-snap-type: y mandatory;
+        font-family: "Lato", sans-serif;
+        font-weight: 100;
+    }
+}
+
+section {
+    scroll-margin-top: 10dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
 }
 
 a,

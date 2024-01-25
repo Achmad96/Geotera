@@ -1,10 +1,10 @@
 export type APIResponse<T = object> = { success: true; data: T } | { success: false; error: string };
 export interface OrderTypes {
-    id: string;
+    key: string;
     location: string;
     date: string;
     weight: number;
     prices: number;
-    complete: boolean;
+    status: string;
     notes?: string;
 }

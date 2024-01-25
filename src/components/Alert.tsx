@@ -1,11 +1,20 @@
-export default function Alert({ title, message, visible, callback }: { title: string; message: string; visible: [boolean, Function]; callback: Function }) {
+import { BiError } from "react-icons/bi";
+import { FaRegCheckCircle } from "react-icons/fa";
+interface AlertInterface {
+    title?: string;
+    type?: "success" | "error" | "info" | "warning";
+    message: string;
+    visible: [boolean, Function?];
+    callback?: Function;
+}
+
+export function ConfirmAlert({ title, message, visible, callback }: AlertInterface) {
     const [isVisible, setVisible] = visible;
     const handleConfirm = () => {
-        callback();
-        setVisible(false);
+        if (callback) callback();
+        if (setVisible) setVisible(false);
     };
-    const handleClose = () => setVisible(false);
-
+    const handleClose = () => setVisible && setVisible(false);
     if (isVisible) {
         return (
             <div className="flex absolute left-0 right-0 top-0 bottom-0 w-full h-[90dvh] justify-center items-center">
@@ -23,6 +32,18 @@ export default function Alert({ title, message, visible, callback }: { title: st
                         </button>
                     </div>
                 </div>
+            </div>
+        );
+    }
+}
+
+export function Alert({ type, message, visible }: AlertInterface) {
+    const [isVisible] = visible;
+    if (isVisible) {
+        return (
+            <div className={`flex items-center gap-5 border  h-[3rem] w-80 rounded-xl ${type === "error" ? "border-red-600 text-red-500" : "border-lime-500 text-lime-500"}`}>
+                {type === "error" ? <BiError className="size-7 ml-5" /> : <FaRegCheckCircle className="size-7 ml-5" />}
+                <p className="text-large">{message}</p>
             </div>
         );
     }

@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 export default function GetStartedButton() {
     const router = useRouter();
     const { isAuth }: { isAuth: boolean } = useContext(AuthContext);
-    const [isLoading, setIsLoading] = useState();
 
     return (
         <button
