@@ -1,5 +1,6 @@
 "use client";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
 import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
@@ -36,11 +37,8 @@ export default function SignInOutButton() {
                     Orders
                 </button>
             )}
-            <button
-                onClick={() => (!isAuth ? handleSignIn() : handleSignOut())}
-                className="border-green-500 border w-fit p-3 px-5 rounded-full text-gray-800 max-sm:p-3 hover:bg-green-600 hover:text-slate-100"
-            >
-                {isAuth ? "Sign out" : "Sign in with Google"}
+            <button onClick={() => (!isAuth ? handleSignIn() : handleSignOut())} className="w-fit rounded-full max-sm:text-sm">
+                {isAuth ? <CgProfile className="w-7 h-7" /> : "Sign in"}
             </button>
         </>
     );

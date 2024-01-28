@@ -1,50 +1,51 @@
-import { BiError } from "react-icons/bi";
-import { FaRegCheckCircle } from "react-icons/fa";
-interface AlertInterface {
-    title?: string;
-    type?: "success" | "error" | "info" | "warning";
+import { motion } from "framer-motion";
+import { memo } from "react";
+
+interface ConfirmAlertInterface {
+    title: string;
     message: string;
-    visible: [boolean, Function?];
-    callback?: Function;
+    visible: { isVisible: boolean; dispatch: Function };
+    callback: Function;
 }
 
-export function ConfirmAlert({ title, message, visible, callback }: AlertInterface) {
-    const [isVisible, setVisible] = visible;
+const ConfirmAlert = memo(({ title, message, visible, callback }: ConfirmAlertInterface) => {
+    const { isVisible, dispatch } = visible;
     const handleConfirm = () => {
         if (callback) callback();
-        if (setVisible) setVisible(false);
+        dispatch({ type: "SET_VISIBILITY", payload: false });
     };
-    const handleClose = () => setVisible && setVisible(false);
+
     if (isVisible) {
         return (
-            <div className="flex absolute left-0 right-0 top-0 bottom-0 w-full h-[90dvh] justify-center items-center">
-                <div className="flex absolute flex-col p-10 gap-10 bg-white shadow-2xl w-[30%] max-sm:gap-7 max-lg:w-[80%] rounded-xl">
+            <div className="absolute flex w-full h-[80dvh] justify-center items-center">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute left-0 right-0 top-0 bottom-0 blur-xl h-[91dvh] transition-all" />
+                <motion.div
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex relative flex-col p-10 gap-7 bg-white shadow-2xl w-[40%] max-lg:w-[60%] max-sm:w-[80%] rounded-xl z-50"
+                >
                     <div className="flex flex-col gap-2">
                         <h1 className="text-2xl font-bold">{title}</h1>
-                        <p id="confirmation-message">{message}</p>
+                        <p>{message}</p>
                     </div>
                     <div className="flex gap-10 justify-center">
-                        <button className="bg-green-600 p-3 px-7 max-sm:px-5 text-white shadow-2xl hover:bg-green-700 rounded-full" onClick={handleConfirm}>
-                            Confirm
+                        <button className="bg-green-600 p-3 px-10 max-sm:px-5 text-white shadow-2xl hover:bg-green-700 rounded-full" onClick={handleConfirm}>
+                            Yes
                         </button>
-                        <button className="bg-slate-50 p-3 px-7 max-sm:px-5 shadow-2xl hover:bg-slate-100 rounded-full" onClick={handleClose}>
+                        <button
+                            className="bg-slate-50 p-3 px-7 max-sm:px-2 shadow-2xl hover:bg-slate-100 rounded-full"
+                            onClick={() => {
+                                dispatch({ type: "SET_VISIBILITY", payload: false });
+                            }}
+                        >
                             Cancel
                         </button>
                     </div>
-                </div>
+                </motion.div>
             </div>
         );
     }
-}
+});
 
-export function Alert({ type, message, visible }: AlertInterface) {
-    const [isVisible] = visible;
-    if (isVisible) {
-        return (
-            <div className={`flex items-center gap-5 border  h-[3rem] w-80 rounded-xl ${type === "error" ? "border-red-600 text-red-500" : "border-lime-500 text-lime-500"}`}>
-                {type === "error" ? <BiError className="size-7 ml-5" /> : <FaRegCheckCircle className="size-7 ml-5" />}
-                <p className="text-large">{message}</p>
-            </div>
-        );
-    }
-}
+export { ConfirmAlert };

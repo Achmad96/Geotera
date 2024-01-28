@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { memo, useEffect, useReducer } from "react";
 import { debounce } from "lodash";
 
 interface SearchActionType {
@@ -21,7 +21,7 @@ const reducer = (state: StateInterface, action: SearchActionType) => {
     }
 };
 
-const SearchInput = ({ dispatch }: { dispatch: Function }) => {
+const SearchInput = memo(({ dispatch }: { dispatch: Function }) => {
     const [state, localDispatch] = useReducer(reducer, { query: "", suggestions: [] });
     const fetchSuggestions = async () => {
         const apiUrl = process.env.NEXT_PUBLIC_HERE_API_URL;
@@ -107,6 +107,6 @@ const SearchInput = ({ dispatch }: { dispatch: Function }) => {
             </div>
         </div>
     );
-};
+});
 
 export default SearchInput;

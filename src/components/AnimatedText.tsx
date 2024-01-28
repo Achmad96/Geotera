@@ -1,6 +1,6 @@
 "use client";
 import { motion, useAnimation, useInView, Variant } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 
 type AnimatedTextProps = {
     text: string;
@@ -23,7 +23,7 @@ const defaultAnimations = {
     },
 };
 
-const AnimatedText = ({ text, el: Wrapper = "p", className, once, underlineWords, animation = defaultAnimations }: AnimatedTextProps) => {
+const AnimatedText = memo(({ text, el: Wrapper = "p", className, once, underlineWords, animation = defaultAnimations }: AnimatedTextProps) => {
     const controls = useAnimation();
     const ref = useRef(null);
     const isInView = useInView(ref, { once });
@@ -87,6 +87,6 @@ const AnimatedText = ({ text, el: Wrapper = "p", className, once, underlineWords
             </motion.span>
         </Wrapper>
     );
-};
+});
 
 export default AnimatedText;

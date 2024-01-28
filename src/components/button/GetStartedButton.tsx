@@ -1,8 +1,8 @@
 "use client";
 import { AuthContext } from "@/context/AuthContextProvider";
-import { toastConfiguration } from "@/utils/ToastConfig";
+import { defaultToastConfig } from "@/utils/ToastConfig";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { toast } from "react-toastify";
 
 export default function GetStartedButton() {
@@ -11,16 +11,16 @@ export default function GetStartedButton() {
 
     return (
         <button
-            className="bg-green-600 text-slate-100 w-fit p-4 rounded-full border-green-500 border hover:bg-transparent hover:text-gray-800"
+            className="bg-[#2FBC9B] w-fit py-3 px-8 rounded-full border text-gray-800"
             onClick={() => {
                 if (isAuth) {
                     router.push("/trash");
                     return;
                 }
-                toast.error("You must be logged in", { ...toastConfiguration, toastId: "must-be-logged-in" });
+                toast.error("You must be logged in", { ...defaultToastConfig, position: "top-right" });
             }}
         >
-            Get started
+            Order now!
         </button>
     );
 }
