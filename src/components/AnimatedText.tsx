@@ -72,7 +72,7 @@ const AnimatedText = memo(({ text, el: Wrapper = "p", className, once, underline
                                 <motion.span
                                     key={charIndex}
                                     style={{
-                                        transition: `background-size ${delay + 0.2}s ease-out`,
+                                        transition: `background-size ${delay + 0.3}s ease-out`,
                                     }}
                                     className={`inline-block style-underline style-bg-underline ${animationComplete && underlineWords?.includes(wordIndex) && "animate-underline"}`}
                                     variants={animation}
