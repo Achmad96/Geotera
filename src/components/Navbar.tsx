@@ -1,7 +1,8 @@
 import Image from "next/image";
 import geotera from "@/assets/geotera.png";
 import Link from "next/link";
-import SignInOutButton from "@/components/button/SignInOutButton";
+import SignInOutButton from "@/components/buttons/SignInOutButton";
+import NotificationButton from "./buttons/NotificationButton";
 
 export default async function Navbar() {
     return (
@@ -13,6 +14,7 @@ export default async function Navbar() {
             <div className="flex items-center gap-7 max-sm:gap-3">
                 <Link href="/">Home</Link>
                 <Link href="/">About</Link>
+                <NotificationButton />
                 <SignInOutButton />
             </div>
         </nav>

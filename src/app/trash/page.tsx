@@ -82,7 +82,7 @@ export default function Trash() {
                 <ConfirmAlert title={"Hold on!"} message={"The data cannot be changed, do you want to confirm?"} visible={{ isVisible: state.isVisible, dispatch }} callback={add_order} />
                 <ToastContainer {...defaultToastConfig} />
             </div>
-            <div className="flex w-full flex-col pl-32 max-sm:pl-10 py-10 gap-10 min-h-64 h-auto">
+            <div className="flex w-full flex-col pl-32 max-sm:pl-10 pt-5 gap-10 min-h-64 h-auto">
                 <div className="flex flex-col justify-start gap-5">
                     <p>Location</p>
                     <SearchInput dispatch={dispatch} />
@@ -136,7 +136,7 @@ export default function Trash() {
                 <button
                     type="submit"
                     onClick={() => dispatch({ type: "SET_FORM_DATAS", payload: { key: uuidv4(), status: "pending" } })}
-                    className="border-collapse bg-green-600 text-slate-100 w-[7rem] p-3 rounded-full hover:border-green-500 hover:border hover:bg-transparent hover:text-gray-800"
+                    className="bg-[#2FBC9B] w-fit py-3 px-8 rounded-full border text-gray-800"
                 >
                     Submit
                 </button>

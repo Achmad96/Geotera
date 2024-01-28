@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 
-export default function GetStartedButton() {
+export default function OrderButton() {
     const router = useRouter();
     const { isAuth }: { isAuth: boolean } = useContext(AuthContext);
 

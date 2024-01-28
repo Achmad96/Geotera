@@ -22,13 +22,13 @@ const ConfirmAlert = memo(({ title, message, visible, callback }: ConfirmAlertIn
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute h-[93dvh] left-0 right-0 top-0 bottom-0 bg-black backdrop-blur-lg bg-opacity-30"
+                    className="absolute h-[90dvh] left-0 right-0 top-0 bottom-0 bg-black backdrop-blur-lg bg-opacity-30"
                 />
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.3 }}
-                    className="flex relative flex-col p-10 gap-7 bg-white shadow-2xl w-[40%] max-lg:w-[60%] max-sm:w-[80%] rounded-xl z-50"
+                    className="absolute flex flex-col p-10 gap-7 bg-white shadow-2xl w-[40%] max-lg:w-[60%] max-sm:w-[80%] rounded-xl z-50"
                 >
                     <div className="flex flex-col gap-2">
                         <h1 className="text-2xl font-bold">{title}</h1>
