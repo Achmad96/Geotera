@@ -19,7 +19,10 @@ interface StateInterface {
 }
 
 const initialState: StateInterface = {
-    formDatas: {} as OrderTypes,
+    formDatas: {
+        weight: 100,
+        prices: 90,
+    } as OrderTypes,
     isVisible: false,
 };
 
@@ -57,11 +60,12 @@ export default function Trash() {
     };
 
     const handleWeightChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const weight = parseInt(e.currentTarget.value);
+        const { value, min, max } = e.currentTarget;
+        const weight: number = Math.max(Number(min), Math.min(Number(max), Number(value)));
         dispatch({
             type: "SET_FORM_DATAS",
             payload: {
-                weight: weight,
+                weight,
                 prices: weight ? weight * 0.9 : 0,
             },
         });
@@ -89,11 +93,12 @@ export default function Trash() {
                         <input
                             name="weight"
                             type="number"
+                            value={state.formDatas.weight}
                             placeholder="Garbage weight"
                             onChange={handleWeightChange}
                             className="w-full h-10 outline-none border-b pl-2"
-                            min={1}
-                            max={999999}
+                            min={100}
+                            max={10000}
                             required
                         />
                     </div>

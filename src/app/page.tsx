@@ -7,9 +7,9 @@ import AnimatedText from "@/components/AnimatedText";
 export default function HomePage() {
     return (
         <main className="h-auto">
-            <section className="flex w-full h-[90dvh] items-center justify-center lg:justify-around max-lg:flex-col-reverse max-md:pt-10">
+            <section className="flex w-full h-[90dvh] items-center justify-center max-xl:justify-evenly max-lg:flex-col-reverse max-md:pt-10">
                 <ToastContainer />
-                <div className="flex flex-col gap-5 pt-5 lg:ml-24 max-md:gap-3 md:ml-10 max-sm:ml-5  ">
+                <div className="flex flex-col gap-5 pt-5 max-md:gap-3 md:ml-10 max-sm:ml-5  ">
                     <p className="text-4xl w-[30rem] font-bold max-lg:text-3xl max-sm:text-xl max-sm:w-80 ">
                         Geotera, Clean Solution for Your <span className="text-[#2FBC9B]">Healthy</span> Environment!
                     </p>
@@ -28,7 +28,7 @@ export default function HomePage() {
                             height="150"
                             viewBox="0 0 370 191"
                             fill="none"
-                            className="absolute left-0 bottom-10 -z-10 max-lg:bottom-0 max-lg:w-56 max-lg:h-60 max-lg:collapse"
+                            className="absolute left-0 bottom-10 -z-10 max-lg:w-56 max-lg:h-60 max-xl:collapse"
                         >
                             <path
                                 d="M95.3185 9.08014C52.5185 -17.3199 -33.8481 20.0801 -71.6814 42.0801C-97.5148 57.9134 -151.581 101.48 -161.181 149.08C-173.181 208.58 -50.6815 194.08 38.3185 164.08C127.319 134.08 187.319 161.08 306.819 149.08C426.319 137.08 346.637 75.0801 306.819 42.0801C267 9.08014 148.819 42.0801 95.3185 9.08014Z"
