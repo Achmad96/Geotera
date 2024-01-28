@@ -3,6 +3,7 @@ import geotera from "@/assets/geotera.png";
 import Link from "next/link";
 import SignInOutButton from "@/components/buttons/SignInOutButton";
 import NotificationButton from "./buttons/NotificationButton";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 export default async function Navbar() {
     return (
@@ -11,12 +12,13 @@ export default async function Navbar() {
                 <Image src={geotera} blurDataURL={"@/assets/geotera.png"} alt="Geotera" width={70} height={70} style={{ width: "auto", height: "auto" }} priority />
                 <p className="text-xl max-sm:hidden text-[#3B8565] -ml-5">Geotera</p>
             </div>
-            <div className="flex items-center gap-7 max-sm:gap-3">
+            <div className="flex items-center gap-7 max-sm:gap-3 max-sm:collapse">
                 <Link href="/">Home</Link>
                 <Link href="/">About</Link>
                 <NotificationButton />
                 <SignInOutButton />
             </div>
+            <GiHamburgerMenu className="sm:collapse sm:hidden w-6 h-6" />
         </nav>
     );
 }
