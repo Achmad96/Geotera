@@ -1,5 +1,5 @@
 export type APIResponse<T = object> = { success: true; data: T } | { success: false; error: string };
-export interface OrderTypes {
+export type OrderTypes = {
     key: string;
     location: string;
     date: string;
@@ -7,4 +7,9 @@ export interface OrderTypes {
     prices: number;
     status: string;
     notes?: string;
-}
+};
+export type NotificationsType = {
+    title: string;
+    message: string;
+    date: string;
+};

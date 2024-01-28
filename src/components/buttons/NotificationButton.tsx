@@ -3,16 +3,19 @@ import { AuthContext } from "@/context/AuthContextProvider";
 import { useContext, useState } from "react";
 import { IoNotifications } from "react-icons/io5";
 
-const NotificationModal = () => {
-    return <></>;
-};
+// const Notifications = () => {
+//     return <></>;
+// };
 
 export default function NotificationButton() {
     const { isAuth }: { isAuth: boolean } = useContext(AuthContext);
-    const [isModalOpen, setModalOpen] = useState();
+    const [getNotifications, setNotifications] = useState([]);
     return (
         <>
-            <IoNotifications className="w-6 h-6" onClick={() => {}} />
+            <div className="daisy-indicator">
+                <span className="daisy-indicator-item daisy-badge daisy-badge-error mr-1 mt-1 daisy-badge-xs"></span>
+                <IoNotifications className="w-6 h-6" onClick={() => {}} />
+            </div>
         </>
     );
 }

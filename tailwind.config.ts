@@ -7,6 +7,10 @@ const config: Config = {
     theme: {
         extend: {},
     },
+    daisyui: {
+        themes: ["light"],
+        prefix: "daisy-",
+    },
     plugins: [
         nextui(),
         plugin(function ({ addUtilities }) {
@@ -29,6 +33,7 @@ const config: Config = {
                 },
             });
         }),
+        require("daisyui"),
     ],
 };
 
