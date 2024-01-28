@@ -12,6 +12,7 @@ export default async function Navbar() {
             </div>
             <div className="flex items-center gap-7 max-sm:gap-3">
                 <Link href="/">Home</Link>
+                <Link href="/">About</Link>
                 <SignInOutButton />
             </div>
         </nav>
