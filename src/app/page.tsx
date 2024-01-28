@@ -38,12 +38,7 @@ export default function HomePage() {
                         </svg>
                     </div>
                 </div>
-                <Image
-                    src={Vector}
-                    alt="Vector"
-                    priority
-                    className="mb-16 mr-24 w-[35rem] h-[35rem]  max-lg:w-80 max-lg:h-80 max-lg:mb-0 max-lg:mr-0 max-sm:w-52 max-sm:h-52 max-md:w-72 max-md:h-72"
-                />
+                <Image src={Vector} alt="Vector" priority className="mb-16 mr-24 w-[35rem] h-[35rem] max-lg:w-80 max-lg:h-80 max-lg:mb-0 max-lg:mr-0 max-md:w-72 max-md:h-72 max-sm:w-64 max-sm:h-64" />
                 <svg className="absolute right-0 -z-10 max-xl:collapse" xmlns="http://www.w3.org/2000/svg" width="850" height="970" viewBox="0 0 850 970" fill="none">
                     <path
                         d="M294.5 230.5C296.549 157.289 455.881 17.6807 547.911 -44.9951L848.19 -78L877.5 952.5C813.301 940.665 652.728 884.096 575.69 912.5C479.392 948.005 351.426 1005.51 278.69 939.5C205.954 873.49 122.995 892.768 31.8197 770.75C-59.356 648.732 63.844 468.237 178.5 398.824C267.82 344.75 291.939 322.013 294.5 230.5Z"
