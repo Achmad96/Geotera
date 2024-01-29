@@ -10,9 +10,6 @@ const AnimatedMenu: Variants = {
         x: 0,
         transition: {
             duration: 0.3,
-            delayChildren: 0.5,
-            staggerDirection: 1,
-            staggerChildren: 0.2,
         },
     },
     hidden: {
