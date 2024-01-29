@@ -11,11 +11,7 @@
         color: #000;
     }
 
-    a,
-    p,
-    h1,
-    h2,
-    h3 {
+    * {
         cursor: default;
         -moz-user-select: -moz-none;
         -khtml-user-select: none;

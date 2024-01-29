@@ -47,7 +47,7 @@ export default function HomePage() {
                     />
                 </svg>
             </section>
-            <section className="flex justify-center items-center w-full h-[90dvh] ">
+            <section className="flex justify-center items-center w-full h-[100dvh] ">
                 <AnimatedText
                     className="text-2xl tracking-wider text-center w-1/2 max-sm:w-[80%]"
                     text={"Through our innovative technologies, we aim to empower consumers to make responsible choices that will reduce their carbon footprint and promote sustainable living."}
