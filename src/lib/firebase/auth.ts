@@ -1,5 +1,5 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { APIResponse } from "@/TypesNInterfaces";
+import { APIResponse } from "@/types";
 import { auth } from "@/lib/firebase/index";
 
 export async function signInWithGoogle() {

@@ -1,16 +1,17 @@
 import React, { memo, useEffect, useReducer } from "react";
 import { debounce } from "lodash";
 
-interface SearchActionType {
+type SearchActionType = {
     type: "SET_QUERY" | "SET_SUGGESTIONS";
     payload?: any;
-}
-interface StateInterface {
+};
+
+type StateType = {
     query: string;
     suggestions: string[];
-}
+};
 
-const reducer = (state: StateInterface, action: SearchActionType) => {
+const reducer = (state: StateType, action: SearchActionType): StateType => {
     switch (action.type) {
         case "SET_QUERY":
             return { ...state, query: action.payload };

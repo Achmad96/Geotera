@@ -8,17 +8,21 @@ import { db } from "@/lib/firebase";
 import { UserRecord } from "firebase-admin/auth";
 import { defaultToastConfig } from "@/utils/ToastConfig";
 import { format_date, validate_date } from "@/utils/DateUtils";
-import { OrderTypes } from "@/TypesNInterfaces";
+import { OrderTypes } from "@/types";
 import { ConfirmAlert } from "@/components/Alert";
 
-import SearchInput from "@/components/trash/SearchInput";
+import SearchInput from "@/components/SearchInput";
 
-interface StateInterface {
+type StateType = {
     formDatas: OrderTypes;
     isVisible: boolean;
-}
+};
+type ActionType = {
+    type: "SET_FORM_DATAS" | "SET_VISIBILITY" | "TOOGLE_VISIBILITY";
+    payload: any;
+};
 
-const initialState: StateInterface = {
+const initialState: StateType = {
     formDatas: {
         weight: 100,
         prices: 90,
@@ -26,12 +30,7 @@ const initialState: StateInterface = {
     isVisible: false,
 };
 
-interface ActionType {
-    type: "SET_FORM_DATAS" | "SET_VISIBILITY" | "TOOGLE_VISIBILITY";
-    payload: any;
-}
-
-const formReducer = (state: StateInterface, action: ActionType) => {
+const formReducer = (state: StateType, action: ActionType): StateType => {
     switch (action.type) {
         case "SET_FORM_DATAS":
             return { ...state, formDatas: { ...state.formDatas, ...action.payload } };
