@@ -58,13 +58,6 @@ const OrderModal = memo(() => {
         document.querySelectorAll<HTMLInputElement>("form input,select,textarea").forEach(v => (v.value = ""));
     };
 
-    useEffect(() => {
-        document.body.style.overflowY = "hidden";
-        return () => {
-            document.body.style.overflowY = "scroll";
-        };
-    }, [isModalOpen]);
-
     return (
         <AnimatePresence>
             {isModalOpen && (
