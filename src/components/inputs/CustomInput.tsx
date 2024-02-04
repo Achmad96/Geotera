@@ -28,9 +28,9 @@ const CustomInput = memo(
                         : label}
                 </p>
                 {isTextArea ? (
-                    <textarea name={name} placeholder={placeholder} className="w-[80%] min-h-10 max-h-14 outline-none border-b pl-2" onChange={onChange} required={required} autoComplete="off" />
+                    <textarea name={name} placeholder={placeholder} className="w-[90%] min-h-10 max-h-14 outline-none border-b pl-2" onChange={onChange} required={required} autoComplete="off" />
                 ) : (
-                    <input name={name} type={type} placeholder={placeholder} className="w-[80%] h-10 outline-none border-b pl-2" onChange={onChange} required={required} autoComplete="off" />
+                    <input name={name} type={type} placeholder={placeholder} className="w-[90%] h-10 outline-none border-b pl-2" onChange={onChange} required={required} autoComplete="off" />
                 )}
             </div>
         );

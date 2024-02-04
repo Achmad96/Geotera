@@ -66,22 +66,22 @@ const OrderModal = memo(() => {
                         e.preventDefault();
                         dispatch({ type: "SET_VISIBILITY", payload: true });
                     }}
-                    className={"absolute flex justify-center items-center w-full h-dvh z-20 bg-transparent top-0 bottom-0"}
+                    className={"fixed flex justify-center items-center w-full h-dvh z-20 bg-transparent top-0 bottom-0"}
                 >
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute h-dvh z-30 top-0 left-0 bottom-0 w-full bg-black backdrop-blur-sm bg-opacity-30"
+                        className="fixed h-dvh z-30 top-0 left-0 bottom-0 w-full bg-black backdrop-blur-sm bg-opacity-30"
                     />
                     <ConfirmModal title="Hold on!" message="The data cannot be changed, do you want to confirm?" visible={{ isVisible: state.isVisible, dispatch }} callback={onOrder} />
                     <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         animate={{ opacity: 1, x: 0, y: 0 }}
                         exit={{ opacity: 0, y: 50 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute flex flex-col w-[90%] min-h-64 z-40 gap-10 bg-white rounded-xl p-10 pl-32 pb-5 max-lg:pl-20 max-sm:pl-10 max-sm:w-[85%]"
+                        transition={{ duration: 0.1 }}
+                        className="absolute flex flex-col w-full min-h-64 z-40 gap-10 bg-white rounded-xl p-10 pl-32 pb-5 max-lg:pl-20 max-sm:pl-10 max-sm:w-[90%]"
                     >
                         <IoIosCloseCircleOutline className="absolute top-2 right-5 w-10 h-10 z-50" onClick={() => setIsModalOpen(false)} />
                         <LocationInput dispatch={dispatch} />

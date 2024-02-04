@@ -74,7 +74,7 @@ const LocationInput = memo(({ dispatch }: { dispatch: (action: ActionType) => vo
                     }
                 }}
                 placeholder="Search for locations"
-                className="w-[80%] outline-none h-10 border-b-1 max-sm:text-sm pl-2"
+                className="w-[90%] outline-none h-10 border-b-1 max-sm:text-sm pl-2"
                 required
             />
             <div className="absolute top-0 bg-white w-[80%] hover:cursor-pointer">
