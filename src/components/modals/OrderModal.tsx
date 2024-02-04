@@ -66,7 +66,7 @@ const OrderModal = memo(() => {
                         e.preventDefault();
                         dispatch({ type: "SET_VISIBILITY", payload: true });
                     }}
-                    className={"fixed z-20 flex justify-center items-center w-full max-w-full h-vh bg-transparent top-0"}
+                    className={"fixed z-20 flex justify-center items-center w-full max-w-full h-vh bg-transparent top-0 bottom-0"}
                 >
                     <motion.div
                         initial={{ opacity: 0 }}
