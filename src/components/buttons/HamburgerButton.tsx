@@ -1,52 +1,89 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AnimatePresence, Variants, motion } from "framer-motion";
+import { AuthContext } from "@/providers/AuthProvider";
+import { handleSignIn, handleSignOut } from "@/components/buttons/SignInOutButton";
+import { useRouter } from "next/navigation";
 
-const AnimatedMenu: Variants = {
-    show: {
+const itemVariant: Variants = {
+    open: {
         opacity: 1,
-        x: 0,
-        transition: {
-            duration: 0.3,
-        },
+        y: 0,
+        transition: { type: "spring", stiffness: 300, damping: 24 },
     },
-    hidden: {
-        opacity: 0,
-        x: 50,
-        transition: {
-            duration: 0.5,
-            delay: 0.7,
-        },
-    },
+    closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
 };
 
-const DropdownLeft = ({ setIsMenuOpen }: { setIsMenuOpen: Function }) => {
-    const AnimatedItem: Variants = {
-        show: { opacity: 1, x: 0, transition: { delay: 0.3 } },
-        hidden: { opacity: 0, x: 20, transition: { delay: 0.3 } },
-    };
+const DropdownLeft = ({ isOpenState }: { isOpenState: [boolean, Function] }) => {
+    const [isMenuOpen, setIsMenuOpen] = isOpenState;
+    const { isAuth }: { isAuth: boolean } = useContext(AuthContext);
+    const router = useRouter();
+
     return (
-        <motion.ul initial="hidden" animate="show" exit="hidden" variants={AnimatedMenu} className="absolute right-0 z-[1] menu p-2 [&>*]:p-2 shadow bg-base-100 text-center rounded-box w-[80%]">
-            <motion.li initial="hidden" animate="show" exit="hidden" variants={AnimatedItem} onClick={() => setIsMenuOpen(false)}>
-                <a href="#home">Home</a>
+        <motion.ul
+            initial={false}
+            animate={isMenuOpen ? "open" : "closed"}
+            variants={{
+                open: {
+                    opacity: 1,
+                    x: 0,
+                    transition: {
+                        type: "spring",
+                        bounce: 0,
+                        duration: 0.7,
+                        delayChildren: 0.3,
+                        staggerChildren: 0.1,
+                    },
+                },
+
+                closed: {
+                    opacity: 0,
+                    x: 50,
+                    transition: {
+                        type: "spring",
+                        bounce: 0,
+                        duration: 0.3,
+                    },
+                },
+            }}
+            className="flex flex-col absolute right-0 z-[1] menu p-2 [&>*]:p-2 shadow bg-base-100 text-center rounded-box w-[80%]"
+        >
+            <motion.a variants={itemVariant} href="#home" onClick={() => setIsMenuOpen(false)}>
+                Home
+            </motion.a>
+            <motion.a variants={itemVariant} href="#about" onClick={() => setIsMenuOpen(false)}>
+                About
+            </motion.a>
+            <motion.li variants={itemVariant} onClick={() => setIsMenuOpen(false)}>
+                Notifications
             </motion.li>
-            <motion.li initial="hidden" animate="show" exit="hidden" variants={AnimatedItem} onClick={() => setIsMenuOpen(false)}>
-                <a href="#about">About</a>
-            </motion.li>
-            <motion.li initial="hidden" animate="show" exit="hidden" variants={AnimatedItem} onClick={() => setIsMenuOpen(false)}>
-                Sign in
+            <motion.li
+                variants={itemVariant}
+                onClick={() => {
+                    setIsMenuOpen(false);
+                    if (!isAuth) {
+                        handleSignIn();
+                        router.push("/");
+                    } else {
+                        handleSignOut();
+                        router.push("/");
+                        router.refresh();
+                    }
+                }}
+            >
+                {isAuth ? "Sign out" : "Sign in"}
             </motion.li>
         </motion.ul>
     );
 };
 
 export default function HamburgerButton() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     return (
         <div className="sm:collapse sm:hidden">
             <GiHamburgerMenu className="w-6 h-6" onClick={() => setIsMenuOpen(!isMenuOpen)} />
-            <AnimatePresence>{isMenuOpen && <DropdownLeft setIsMenuOpen={setIsMenuOpen} />}</AnimatePresence>
+            <DropdownLeft isOpenState={[isMenuOpen, setIsMenuOpen]} />
         </div>
     );
 }
