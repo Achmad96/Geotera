@@ -9,6 +9,5 @@ export async function POST(request: NextRequest) {
     const expiresIn = 60 * 60 * 24 * 5 * 1000;
     const sessionCookie = await createSessionCookie(idToken, { expiresIn });
     cookies().set("__session", sessionCookie, { maxAge: expiresIn, httpOnly: true, secure: true });
-
     return NextResponse.json<APIResponse<string>>({ success: true, data: "Signed in successfully." });
 }

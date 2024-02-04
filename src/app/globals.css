@@ -8,6 +8,7 @@
     body {
         overflow-x: hidden;
         font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
         color: #000;
     }
 
@@ -18,5 +19,15 @@
         -webkit-user-select: none;
         -ms-user-select: none;
         user-select: none;
+    }
+}
+
+@layer components {
+    .btn-geo {
+        background-color: #2fbc9b;
+        width: theme("width.fit");
+        padding: theme("padding.3") theme("padding.8") theme("padding.3") theme("padding.8");
+        border-radius: theme("borderRadius.full");
+        color: theme("colors.gray.800");
     }
 }

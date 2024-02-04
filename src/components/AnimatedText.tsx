@@ -15,11 +15,11 @@ type AnimatedTextProps = {
 };
 
 const defaultAnimations = {
-    hidden: { opacity: 0, y: 15 },
+    hidden: { opacity: 0, y: 10 },
     visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.3, ease: "easeOut" },
+        transition: { duration: 0.2, ease: "easeOut" },
     },
 };
 
@@ -27,7 +27,7 @@ const AnimatedText = memo(({ text, el: Wrapper = "p", className, once, underline
     const controls = useAnimation();
     const ref = useRef(null);
     const isInView = useInView(ref, { once });
-    const [animationComplete, setAnimationComplete] = useState(false); // Track animation completion
+    const [animationComplete, setAnimationComplete] = useState(false);
 
     useEffect(() => {
         if (isInView) {
@@ -36,9 +36,10 @@ const AnimatedText = memo(({ text, el: Wrapper = "p", className, once, underline
             if (!once) setAnimationComplete(false);
             controls.start("hidden");
         }
+        return () => {};
     }, [isInView, controls]);
 
-    const handleAnimationComplete = (define: any) => {
+    const handleAnimationComplete = (define: string) => {
         if (define === "visible") {
             setAnimationComplete(true);
         }
@@ -58,6 +59,7 @@ const AnimatedText = memo(({ text, el: Wrapper = "p", className, once, underline
             >
                 {text.split(" ").map((word, wordIndex) => {
                     const delay = wordIndex / 10;
+
                     return (
                         <span
                             key={wordIndex}

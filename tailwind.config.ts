@@ -12,6 +12,7 @@ const config: Config = {
         prefix: "daisy-",
     },
     plugins: [
+        require("daisyui"),
         nextui(),
         plugin(function ({ addUtilities }) {
             addUtilities({
@@ -33,7 +34,6 @@ const config: Config = {
                 },
             });
         }),
-        require("daisyui"),
     ],
 };
 

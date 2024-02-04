@@ -1,5 +1,6 @@
 import React, { memo, useEffect, useReducer } from "react";
 import { debounce } from "lodash";
+import { ActionType } from "../modals/OrderModal";
 
 type SearchActionType = {
     type: "SET_QUERY" | "SET_SUGGESTIONS";
@@ -22,7 +23,7 @@ const reducer = (state: StateType, action: SearchActionType): StateType => {
     }
 };
 
-const SearchInput = memo(({ dispatch }: { dispatch: Function }) => {
+const LocationInput = memo(({ dispatch }: { dispatch: (action: ActionType) => void }) => {
     const [state, localDispatch] = useReducer(reducer, { query: "", suggestions: [] });
     const fetchSuggestions = async () => {
         const apiUrl = process.env.NEXT_PUBLIC_HERE_API_URL;
@@ -51,13 +52,12 @@ const SearchInput = memo(({ dispatch }: { dispatch: Function }) => {
             localDispatch({ type: "SET_SUGGESTIONS", payload: [] });
         }
 
-        return () => {
-            debouncedFetchSuggestions.cancel();
-        };
+        return () => debouncedFetchSuggestions.cancel();
     }, [state.query]);
 
     return (
-        <div className="w-full">
+        <div className="flex flex-col justify-start gap-5 w-full">
+            <p>Location</p>
             <input
                 name="location"
                 type="text"
@@ -77,7 +77,7 @@ const SearchInput = memo(({ dispatch }: { dispatch: Function }) => {
                 className="w-[80%] outline-none h-10 border-b-1 max-sm:text-sm pl-2"
                 required
             />
-            <div className="w-[80%] hover:cursor-pointer">
+            <div className="absolute bg-white w-[80%] hover:cursor-pointer">
                 {state.suggestions?.map((item: any, index: number) => (
                     <button
                         key={index}
@@ -100,7 +100,7 @@ const SearchInput = memo(({ dispatch }: { dispatch: Function }) => {
                             localDispatch({ type: "SET_QUERY", payload: item.title });
                             dispatch({ type: "SET_FORM_DATAS", payload: { location: item.title } });
                         }}
-                        className={`btn-location text-left w-full pl-3 text-md max-sm:pl-2 max-sm:text-xs focus:bg-neutral-200 focus:outline-none hover:bg-neutral-200 suggest-${index}`}
+                        className={`text-left w-full pl-3 text-md max-sm:pl-2 max-sm:text-xs max-lg:text-sm focus:bg-neutral-200 focus:outline-none hover:bg-neutral-200 suggest-${index}`}
                     >
                         {item.title}
                     </button>
@@ -110,4 +110,4 @@ const SearchInput = memo(({ dispatch }: { dispatch: Function }) => {
     );
 });
 
-export default SearchInput;
+export default LocationInput;

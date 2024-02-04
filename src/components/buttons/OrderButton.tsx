@@ -1,20 +1,19 @@
 "use client";
-import { AuthContext } from "@/context/AuthContextProvider";
+import { AuthContext } from "@/providers/AuthProvider";
 import { defaultToastConfig } from "@/utils/ToastConfig";
-import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { toast } from "react-toastify";
+import { OrderModalContext } from "@/providers/OrderModalProvider";
 
 export default function OrderButton() {
-    const router = useRouter();
     const { isAuth }: { isAuth: boolean } = useContext(AuthContext);
-
+    const { setIsModalOpen } = useContext(OrderModalContext);
     return (
         <button
-            className="bg-[#2FBC9B] w-fit py-3 px-8 rounded-full border text-gray-800"
+            className="btn-geo"
             onClick={() => {
                 if (isAuth) {
-                    router.push("/trash");
+                    setIsModalOpen(true);
                     return;
                 }
                 toast.error("You must be logged in", { ...defaultToastConfig, position: "top-right" });

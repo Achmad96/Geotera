@@ -1,13 +1,12 @@
 "use client";
-import { CgProfile } from "react-icons/cg";
 import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { AuthContext } from "@/context/AuthContextProvider";
+import { AuthContext } from "@/providers/AuthProvider";
 import { UserRecord } from "firebase-admin/auth";
 
 export default function SignInOutButton() {
-    const { currentUser, isAuth }: { currentUser: UserRecord; isAuth: boolean } = useContext(AuthContext);
+    const { isAuth }: { currentUser: UserRecord; isAuth: boolean } = useContext(AuthContext);
     const router = useRouter();
     const handleSignIn = async () => {
         try {
@@ -29,10 +28,8 @@ export default function SignInOutButton() {
     };
 
     return (
-        <>
-            <button onClick={() => (!isAuth ? handleSignIn() : handleSignOut())} className="w-fit rounded-full max-sm:text-sm">
-                {isAuth ? <CgProfile className="w-7 h-7" /> : "Sign in"}
-            </button>
-        </>
+        <button onClick={() => (!isAuth ? handleSignIn() : handleSignOut())} className={`w-fit rounded-full max-sm:text-sm border-2 border-black py-2 px-7`}>
+            {!isAuth ? "Sign in" : "Sign out"}
+        </button>
     );
 }

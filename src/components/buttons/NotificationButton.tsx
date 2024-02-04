@@ -1,18 +1,18 @@
 "use client";
 import { NotificationsType } from "@/types";
-import { AuthContext } from "@/context/AuthContextProvider";
+import { AuthContext } from "@/providers/AuthProvider";
 import { useContext, useReducer } from "react";
 import { IoNotifications } from "react-icons/io5";
 
-interface ActionType {
+type ActionType = {
     type: "SET_NOTIFICATIONS" | "SET_VISIBILITY";
     payload: any;
-}
+};
 
-interface StateType {
+type StateType = {
     notifications: NotificationsType[];
     visible: boolean;
-}
+};
 
 const notificationsReducer = (state: StateType, action: ActionType): StateType => {
     const { type, payload } = action;

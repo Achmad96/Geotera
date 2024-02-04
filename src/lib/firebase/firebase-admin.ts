@@ -1,7 +1,6 @@
 import "server-only";
 
 import { cookies } from "next/headers";
-
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { SessionCookieOptions, getAuth } from "firebase-admin/auth";
 
@@ -18,7 +17,6 @@ export const firebaseApp =
         "firebase-admin-app"
     );
 export const auth = getAuth(firebaseApp);
-
 export async function isUserAuthenticated(session: string | undefined = undefined) {
     const _session = session ?? (await getSession());
     if (!_session) return false;
@@ -33,14 +31,11 @@ export async function isUserAuthenticated(session: string | undefined = undefine
 
 export async function getCurrentUser() {
     const session = await getSession();
-
     if (!(await isUserAuthenticated(session))) {
         return null;
     }
-
     const decodedIdToken = await auth.verifySessionCookie(session!);
     const currentUser = await auth.getUser(decodedIdToken.uid);
-
     return currentUser;
 }
 

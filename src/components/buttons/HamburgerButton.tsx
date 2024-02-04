@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AnimatePresence, Variants, motion } from "framer-motion";
@@ -30,10 +29,10 @@ const DropdownLeft = ({ setIsMenuOpen }: { setIsMenuOpen: Function }) => {
     return (
         <motion.ul initial="hidden" animate="show" exit="hidden" variants={AnimatedMenu} className="absolute right-0 z-[1] menu p-2 [&>*]:p-2 shadow bg-base-100 text-center rounded-box w-[80%]">
             <motion.li initial="hidden" animate="show" exit="hidden" variants={AnimatedItem} onClick={() => setIsMenuOpen(false)}>
-                <Link href={"/"}>Home</Link>
+                <a href="#home">Home</a>
             </motion.li>
             <motion.li initial="hidden" animate="show" exit="hidden" variants={AnimatedItem} onClick={() => setIsMenuOpen(false)}>
-                <Link href={"/"}>About</Link>
+                <a href="#about">About</a>
             </motion.li>
             <motion.li initial="hidden" animate="show" exit="hidden" variants={AnimatedItem} onClick={() => setIsMenuOpen(false)}>
                 Sign in

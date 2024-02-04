@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import { memo } from "react";
 
-interface ConfirmAlertInterface {
+type ConfirmModalType = {
     title: string;
     message: string;
     visible: { isVisible: boolean; dispatch: Function };
     callback: Function;
-}
+};
 
-const ConfirmAlert = memo(({ title, message, visible, callback }: ConfirmAlertInterface) => {
+const ConfirmModal = memo(({ title, message, visible, callback }: ConfirmModalType) => {
     const { isVisible, dispatch } = visible;
     const handleConfirm = () => {
         if (callback) callback();
@@ -17,13 +17,7 @@ const ConfirmAlert = memo(({ title, message, visible, callback }: ConfirmAlertIn
 
     if (isVisible) {
         return (
-            <div className="absolute w-full h-[80dvh] flex justify-center items-center">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute h-[90dvh] left-0 right-0 top-0 bottom-0 bg-black backdrop-blur-lg bg-opacity-30"
-                />
+            <div className="absolute w-full h-dvh top-0 left-0 z-50 flex justify-center items-center">
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -53,4 +47,4 @@ const ConfirmAlert = memo(({ title, message, visible, callback }: ConfirmAlertIn
     }
 });
 
-export { ConfirmAlert };
+export default ConfirmModal;
