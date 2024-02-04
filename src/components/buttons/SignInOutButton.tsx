@@ -27,14 +27,9 @@ export default function SignInOutButton() {
     return (
         <button
             onClick={() => {
-                if (!isAuth) {
-                    handleSignIn();
-                    router.push("/");
-                } else {
-                    handleSignOut();
-                    router.push("/");
-                    router.refresh();
-                }
+                !isAuth ? handleSignIn() : handleSignOut();
+                router.push("/");
+                router.refresh();
             }}
             className={`w-fit rounded-full max-sm:text-sm border-2 border-black py-2 px-7`}
         >

@@ -62,14 +62,9 @@ const DropdownLeft = ({ isOpenState }: { isOpenState: [boolean, Function] }) => 
                 variants={itemVariant}
                 onClick={() => {
                     setIsMenuOpen(false);
-                    if (!isAuth) {
-                        handleSignIn();
-                        router.push("/");
-                    } else {
-                        handleSignOut();
-                        router.push("/");
-                        router.refresh();
-                    }
+                    !isAuth ? handleSignIn() : handleSignOut();
+                    router.push("/");
+                    router.refresh();
                 }}
             >
                 {isAuth ? "Sign out" : "Sign in"}
