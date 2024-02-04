@@ -7,7 +7,7 @@ import OrderModal from "@/components/modals/OrderModal";
 
 export default function Home() {
     return (
-        <main className="flex flex-col items-center h-auto w-full max-w-full">
+        <main className="flex flex-col items-center h-auto w-full max-w-full overflow-x-hidden">
             <ToastContainer />
             <OrderModal />
             <section id="#home" className="flex w-full max-w-full h-[90vh] items-center justify-center max-xl:justify-around max-lg:flex-col-reverse max-lg:pt-10">
