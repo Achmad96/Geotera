@@ -6,14 +6,20 @@
 @layer base {
     html,
     body {
-        max-width: 100%;
         overflow-x: hidden;
+        width: 100%;
+        max-width: 100%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+
         font-family: "Poppins", sans-serif;
         scroll-behavior: smooth;
         color: #000;
     }
 
     * {
+        /* border: 1px solid; */
         cursor: default;
         -moz-user-select: -moz-none;
         -khtml-user-select: none;
