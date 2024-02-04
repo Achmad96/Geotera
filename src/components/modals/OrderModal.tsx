@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useReducer, FormEvent, memo } from "react";
+import React, { useContext, useReducer, FormEvent, memo, useEffect } from "react";
 
 import { OrderModalContext } from "@/providers/OrderModalProvider";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -57,6 +57,13 @@ const OrderModal = memo(() => {
         await setDoc(orderDocs, { orders: arrayUnion({ id: uuidv4(), ...state.formDatas }) }, { merge: true });
         document.querySelectorAll<HTMLInputElement>("form input,select,textarea").forEach(v => (v.value = ""));
     };
+
+    useEffect(() => {
+        document.body.style.overflowY = "hidden";
+        return () => {
+            document.body.style.overflowY = "scroll";
+        };
+    }, [isModalOpen]);
 
     return (
         <AnimatePresence>
