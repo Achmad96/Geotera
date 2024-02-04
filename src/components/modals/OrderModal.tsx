@@ -73,7 +73,7 @@ const OrderModal = memo(() => {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute z-30 left-0 right-0 top-0 bottom-0 h-dvh w-full bg-black backdrop-blur-sm bg-opacity-30"
+                        className="absolute w-full h-dvh z-30 top-0 right-0 left-0 bottom-0 bg-black backdrop-blur-sm bg-opacity-30"
                     />
                     <ConfirmModal title="Hold on!" message="The data cannot be changed, do you want to confirm?" visible={{ isVisible: state.isVisible, dispatch }} callback={onOrder} />
                     <motion.div
