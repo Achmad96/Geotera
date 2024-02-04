@@ -77,7 +77,7 @@ const LocationInput = memo(({ dispatch }: { dispatch: (action: ActionType) => vo
                 className="w-[80%] outline-none h-10 border-b-1 max-sm:text-sm pl-2"
                 required
             />
-            <div className="absolute bg-white w-[80%] hover:cursor-pointer">
+            <div className="absolute top-0 bg-white w-[80%] hover:cursor-pointer">
                 {state.suggestions?.map((item: any, index: number) => (
                     <button
                         key={index}
