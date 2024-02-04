@@ -73,14 +73,14 @@ const OrderModal = memo(() => {
                         e.preventDefault();
                         dispatch({ type: "SET_VISIBILITY", payload: true });
                     }}
-                    className={"fixed z-20 flex justify-center items-center w-full h-vh bg-transparent top-0"}
+                    className={"fixed z-20 flex justify-center items-center w-full max-w-full h-vh bg-transparent top-0 right-0 left-0 bottom-0"}
                 >
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed w-full h-vh z-30 top-0 right-0 left-0 bottom-0 bg-black backdrop-blur-sm bg-opacity-30"
+                        className="fixed w-full h-vh z-30 top-0 right-0 left-0 bottom-0 max-w-full bg-black backdrop-blur-sm bg-opacity-30"
                     />
                     <ConfirmModal title="Hold on!" message="The data cannot be changed, do you want to confirm?" visible={{ isVisible: state.isVisible, dispatch }} callback={onOrder} />
                     <motion.div
