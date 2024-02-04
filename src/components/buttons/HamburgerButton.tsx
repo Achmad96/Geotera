@@ -48,7 +48,7 @@ const DropdownLeft = ({ isOpenState }: { isOpenState: [boolean, Function] }) => 
                     },
                 },
             }}
-            className="flex flex-col absolute right-0 z-[1] menu p-2 [&>*]:p-2 shadow bg-base-100 text-center rounded-box w-[80%]"
+            className="flex flex-col absolute right-0 z-[1] menu p-2 mr-2 [&>*]:p-2 shadow bg-base-100 text-center rounded-box w-[80%]"
         >
             <motion.a variants={itemVariant} href="#home" onClick={() => setIsMenuOpen(false)}>
                 Home
