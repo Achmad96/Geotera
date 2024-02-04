@@ -22,32 +22,32 @@ const DropdownLeft = ({ isOpenState }: { isOpenState: [boolean, Function] }) => 
 
     return (
         <motion.ul
-            initial={false}
-            animate={isMenuOpen ? "open" : "closed"}
-            variants={{
-                open: {
-                    opacity: 1,
-                    x: 0,
-                    transition: {
-                        type: "spring",
-                        bounce: 0,
-                        duration: 0.7,
-                        delayChildren: 0.3,
-                        staggerChildren: 0.1,
-                    },
-                },
+            // initial={false}
+            // animate={isMenuOpen ? "open" : "closed"}
+            // variants={{
+            //     open: {
+            //         opacity: 1,
+            //         x: 0,
+            //         transition: {
+            //             type: "spring",
+            //             bounce: 0,
+            //             duration: 0.7,
+            //             delayChildren: 0.3,
+            //             staggerChildren: 0.1,
+            //         },
+            //     },
 
-                closed: {
-                    opacity: 0,
-                    x: 50,
-                    transition: {
-                        type: "spring",
-                        bounce: 0,
-                        duration: 0.3,
-                        delayChildren: 0.5,
-                    },
-                },
-            }}
+            //     closed: {
+            //         opacity: 0,
+            //         x: 50,
+            //         transition: {
+            //             type: "spring",
+            //             bounce: 0,
+            //             duration: 0.3,
+            //             delayChildren: 0.5,
+            //         },
+            //     },
+            // }}
             className="flex flex-col absolute right-0 z-[1] menu p-2 mr-3 [&>*]:p-2 shadow bg-base-100 text-center rounded-box w-[80%]"
         >
             <motion.a variants={itemVariant} href="#home" onClick={() => setIsMenuOpen(false)}>
