@@ -51,6 +51,18 @@ const OrderModal = memo(() => {
     const { isModalOpen, setIsModalOpen } = useContext(OrderModalContext);
     const { currentUser }: { currentUser: UserRecord } = useContext(AuthContext);
     const [state, dispatch] = useReducer(formReducer, initialState);
+
+    useEffect(() => {
+        if (isModalOpen) {
+            document.documentElement.style.overflowY = "hidden";
+        } else {
+            document.documentElement.style.overflowY = "auto";
+        }
+        return () => {
+            document.documentElement.style.overflowY = "auto";
+        };
+    }, [isModalOpen]);
+
     const onOrder = async () => {
         validate_date(state.formDatas.date);
         const orderDocs = doc(db, `users/${currentUser!.uid}`);
