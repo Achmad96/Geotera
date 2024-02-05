@@ -81,7 +81,7 @@ const OrderModal = memo(() => {
                         animate={{ opacity: 1, x: 0, y: 0 }}
                         exit={{ opacity: 0, y: 50 }}
                         transition={{ duration: 0.1 }}
-                        className="absolute flex flex-col w-full min-h-64 z-40 gap-10 bg-white rounded-xl p-10 pl-32 pb-5 max-lg:pl-20 max-sm:pl-10 max-sm:w-[90%]"
+                        className="absolute flex flex-col w-[60%] min-h-64 z-40 gap-10 bg-white rounded-xl p-10 pl-24 pb-5 max-lg:pl-20 max-sm:pl-10 max-sm:w-[90%]"
                     >
                         <IoIosCloseCircleOutline className="absolute top-2 right-5 w-10 h-10 z-50" onClick={() => setIsModalOpen(false)} />
                         <LocationInput dispatch={dispatch} />

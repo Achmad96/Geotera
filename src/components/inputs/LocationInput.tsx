@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useReducer } from "react";
 import { debounce } from "lodash";
-import { ActionType } from "../modals/OrderModal";
+import { ActionType } from "@/components/modals/OrderModal";
 
 type SearchActionType = {
     type: "SET_QUERY" | "SET_SUGGESTIONS";

@@ -1,5 +1,5 @@
 import { memo, ChangeEvent } from "react";
-import type { StateType, ActionType } from "../modals/OrderModal";
+import type { StateType, ActionType } from "@/components/modals/OrderModal";
 
 const WeightInput = memo(({ state, dispatch }: { state: StateType; dispatch: (action: ActionType) => void }) => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -10,7 +10,7 @@ const WeightInput = memo(({ state, dispatch }: { state: StateType; dispatch: (ac
 
     return (
         <div className="flex justify-start items-end gap-5">
-            <div className="flex flex-col w-[63%]">
+            <div className="flex flex-col w-[74%]">
                 <p>Weight (g)</p>
                 <input
                     name="weight"
@@ -26,7 +26,7 @@ const WeightInput = memo(({ state, dispatch }: { state: StateType; dispatch: (ac
             </div>
             <div className="flex gap-3 items-center w-full">
                 <p>Rp</p>
-                <input type="number" name="prices" className="w-[63%] h-10 outline-none border-b pl-2" placeholder="prices" value={state.formDatas?.prices ? state.formDatas.prices : 90} disabled />
+                <input type="number" name="prices" className="w-[74%] h-10 outline-none border-b pl-2" placeholder="prices" value={state.formDatas?.prices ? state.formDatas.prices : 90} disabled />
             </div>
         </div>
     );
