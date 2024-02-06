@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useReducer, FormEvent, memo, useEffect } from "react";
+import React, { useContext, useReducer, FormEvent, memo, useEffect, useMemo, useCallback } from "react";
 
 import { OrderModalContext } from "@/providers/OrderModalProvider";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -23,6 +23,7 @@ export type StateType = {
     formDatas: OrderTypes;
     isVisible: boolean;
 };
+
 export type ActionType = {
     type: "SET_FORM_DATAS" | "SET_VISIBILITY";
     payload: any;
@@ -47,16 +48,13 @@ const formReducer = (state: StateType, action: ActionType): StateType => {
     }
 };
 
-const OrderModal = memo(() => {
+const OrderModal = () => {
     const { isModalOpen, setIsModalOpen } = useContext(OrderModalContext);
     const { currentUser }: { currentUser: UserRecord } = useContext(AuthContext);
     const [state, dispatch] = useReducer(formReducer, initialState);
-
     useEffect(() => {
         if (isModalOpen) {
             document.documentElement.style.overflowY = "hidden";
-        } else {
-            document.documentElement.style.overflowY = "auto";
         }
         return () => {
             document.documentElement.style.overflowY = "auto";
@@ -114,5 +112,6 @@ const OrderModal = memo(() => {
             )}
         </AnimatePresence>
     );
-});
+};
+
 export default OrderModal;

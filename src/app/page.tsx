@@ -10,8 +10,8 @@ export default function Home() {
         <main className="flex flex-col items-center h-auto w-full max-w-full">
             <ToastContainer />
             <OrderModal />
-            <section id="#home" className="flex w-full max-w-full h-[90dvh] items-center justify-center max-xl:justify-around max-lg:flex-col-reverse max-lg:pt-10">
-                <div className="flex flex-col gap-5 pt-5 max-sm:ml-5  ">
+            <section id="#home" className="flex w-full max-w-full h-[90svh] items-center justify-center max-xl:justify-around max-lg:flex-col-reverse max-lg:pt-10">
+                <div className="flex flex-col gap-5 pt-5 max-sm:ml-5">
                     <p className="text-4xl w-[30rem] font-bold max-lg:text-3xl max-sm:text-xl max-sm:w-80 ">
                         Geotera, Clean Solution for Your <span className="text-[#2FBC9B]">Healthy</span> Environment!
                     </p>
@@ -49,11 +49,11 @@ export default function Home() {
                     />
                 </svg>
             </section>
-            <section id="about" className="flex justify-center items-center w-full max-w-full h-dvh">
+            <section id="about" className="flex justify-center items-center w-full max-w-full h-svh">
                 <AnimatedText
                     className="text-2xl -z-10 tracking-wider text-center w-1/2 max-sm:w-[80%]"
                     text={"Through our innovative technologies, we aim to empower consumers to make responsible choices that will reduce their carbon footprint and promote sustainable living."}
-                    once={true}
+                    once={false}
                     underlineWords={[11, 12]}
                 />
             </section>

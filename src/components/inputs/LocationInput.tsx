@@ -1,15 +1,26 @@
-import React, { memo, useEffect, useReducer } from "react";
+import React, { memo, useEffect, useReducer, useRef } from "react";
 import { debounce } from "lodash";
 import { ActionType } from "@/components/modals/OrderModal";
 
 type SearchActionType = {
-    type: "SET_QUERY" | "SET_SUGGESTIONS";
+    type: "SET_QUERY" | "SET_SUGGESTIONS" | "SET_CURRENT_LOCATION";
     payload?: any;
+};
+
+type LocationType = {
+    long: number;
+    lat: number;
 };
 
 type StateType = {
     query: string;
     suggestions: string[];
+    location: LocationType;
+};
+
+const matchersLocation: any = {
+    "Jalan ": "Jl.",
+    ", Indonesia": "",
 };
 
 const reducer = (state: StateType, action: SearchActionType): StateType => {
@@ -18,22 +29,38 @@ const reducer = (state: StateType, action: SearchActionType): StateType => {
             return { ...state, query: action.payload };
         case "SET_SUGGESTIONS":
             return { ...state, suggestions: action.payload };
+        case "SET_CURRENT_LOCATION":
+            return { ...state, location: action.payload };
         default:
             return state;
     }
 };
 
 const LocationInput = memo(({ dispatch }: { dispatch: (action: ActionType) => void }) => {
-    const [state, localDispatch] = useReducer(reducer, { query: "", suggestions: [] });
+    const [state, localDispatch] = useReducer(reducer, { query: "", suggestions: [], location: { long: 0, lat: 0 } });
+    const ref = useRef<HTMLInputElement | null>(null);
+
     const fetchSuggestions = async () => {
         const apiUrl = process.env.NEXT_PUBLIC_HERE_API_URL;
         const apiKey = process.env.NEXT_PUBLIC_HERE_API_KEY;
+        if (!state.location.long || !state.location.lat) {
+            const permissionStatus = await navigator.permissions.query({ name: "geolocation" });
+            if (permissionStatus.state === "granted") {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        localDispatch({ type: "SET_CURRENT_LOCATION", payload: { lat: position.coords.latitude, long: position.coords.longitude } });
+                    },
+                    err => console.log(err)
+                );
+            }
+        }
+
         const params = new URLSearchParams({
             q: state.query as string,
-            in: "countryCode:IDN",
+            in: !state.location.long || !state.location.lat ? "countryCode:IDN" : `circle:${state.location.lat},${state.location.long};r=10000`,
+            lang: "id-ID",
             apiKey: apiKey as string,
         });
-
         try {
             const response = await fetch(`${apiUrl}?${params}`);
             const data = await response.json();
@@ -43,7 +70,7 @@ const LocationInput = memo(({ dispatch }: { dispatch: (action: ActionType) => vo
         }
     };
 
-    const debouncedFetchSuggestions = debounce(fetchSuggestions, 300);
+    const debouncedFetchSuggestions = debounce(fetchSuggestions, 1000);
 
     useEffect(() => {
         if (state.query.length > 2 && state.suggestions !== undefined) {
@@ -61,6 +88,7 @@ const LocationInput = memo(({ dispatch }: { dispatch: (action: ActionType) => vo
             <input
                 name="location"
                 type="text"
+                ref={ref}
                 value={state.query}
                 autoComplete="off"
                 onChange={e => localDispatch({ type: "SET_QUERY", payload: e.target.value })}
@@ -77,34 +105,42 @@ const LocationInput = memo(({ dispatch }: { dispatch: (action: ActionType) => vo
                 className="w-[90%] outline-none h-10 border-b-1 max-sm:text-sm pl-2"
                 required
             />
-            <div className="absolute top-0 bg-white w-[80%] hover:cursor-pointer">
-                {state.suggestions?.map((item: any, index: number) => (
-                    <button
-                        key={index}
-                        onKeyDown={e => {
-                            e.preventDefault();
-                            if (e.key === "Enter") {
+            <div
+                className={"absolute bg-white w-[80%] hover:cursor-pointer"}
+                style={{ top: `${ref.current && Math.floor(ref.current.getBoundingClientRect().bottom - ref.current.getBoundingClientRect().height - 10)}px` }}
+            >
+                {state.suggestions?.map((item: any, index: number) => {
+                    const location: any = item.address.label.replace(/Jalan |, [0-9]{5}, Indonesia/g, function (m: string) {
+                        return matchersLocation[m];
+                    });
+                    return (
+                        <button
+                            key={index}
+                            onKeyDown={e => {
+                                e.preventDefault();
+                                if (e.key === "Enter") {
+                                    localDispatch({ type: "SET_SUGGESTIONS", payload: undefined });
+                                    localDispatch({ type: "SET_QUERY", payload: location });
+                                    dispatch({ type: "SET_FORM_DATAS", payload: { location: location } });
+                                } else if (e.key === "ArrowDown") {
+                                    const btn = document.querySelector(`.suggest-${index !== state.suggestions.length - 1 ? index + 1 : 0}`) as HTMLElement;
+                                    btn?.focus();
+                                } else if (e.key === "ArrowUp") {
+                                    const btn = document.querySelector(`.suggest-${index !== 0 ? index - 1 : state.suggestions.length - 1}`) as HTMLElement;
+                                    btn?.focus();
+                                }
+                            }}
+                            onClick={() => {
                                 localDispatch({ type: "SET_SUGGESTIONS", payload: undefined });
-                                localDispatch({ type: "SET_QUERY", payload: item.title });
-                                dispatch({ type: "SET_FORM_DATAS", payload: { location: item.title } });
-                            } else if (e.key === "ArrowDown") {
-                                const btn = document.querySelector(`.suggest-${index !== state.suggestions.length - 1 ? index + 1 : 0}`) as HTMLElement;
-                                btn?.focus();
-                            } else if (e.key === "ArrowUp") {
-                                const btn = document.querySelector(`.suggest-${index !== 0 ? index - 1 : state.suggestions.length - 1}`) as HTMLElement;
-                                btn?.focus();
-                            }
-                        }}
-                        onClick={() => {
-                            localDispatch({ type: "SET_SUGGESTIONS", payload: undefined });
-                            localDispatch({ type: "SET_QUERY", payload: item.title });
-                            dispatch({ type: "SET_FORM_DATAS", payload: { location: item.title } });
-                        }}
-                        className={`text-left w-full pl-3 text-md max-sm:pl-2 max-sm:text-xs max-lg:text-sm focus:bg-neutral-200 focus:outline-none hover:bg-neutral-200 suggest-${index}`}
-                    >
-                        {item.title}
-                    </button>
-                ))}
+                                localDispatch({ type: "SET_QUERY", payload: location });
+                                dispatch({ type: "SET_FORM_DATAS", payload: { location: location } });
+                            }}
+                            className={`text-left w-full pl-3 text-md focus:bg-neutral-200 focus:outline-none hover:bg-neutral-200 max-lg:text-sm max-sm:pl-2 max-sm:text-xs suggest-${index}`}
+                        >
+                            {location}
+                        </button>
+                    );
+                })}
             </div>
         </div>
     );

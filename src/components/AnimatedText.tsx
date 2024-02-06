@@ -19,7 +19,7 @@ const defaultAnimations = {
     visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.2, ease: "easeOut" },
+        transition: { duration: 0.25, ease: "easeInOut" },
     },
 };
 
@@ -27,21 +27,22 @@ const AnimatedText = memo(({ text, el: Wrapper = "p", className, once, underline
     const controls = useAnimation();
     const ref = useRef(null);
     const isInView = useInView(ref, { once });
-    const [animationComplete, setAnimationComplete] = useState(false);
+    const [isAnimationComplete, setIsAnimationComplete] = useState(false);
 
     useEffect(() => {
         if (isInView) {
             controls.start("visible");
         } else {
-            if (!once) setAnimationComplete(false);
+            setIsAnimationComplete(false);
             controls.start("hidden");
         }
-        return () => {};
     }, [isInView, controls]);
 
-    const handleAnimationComplete = (define: string) => {
-        if (define === "visible") {
-            setAnimationComplete(true);
+    const handleIsAnimationComplete = (define: string) => {
+        if (define === "hidden") {
+            setIsAnimationComplete(false);
+        } else {
+            setIsAnimationComplete(true);
         }
     };
 
@@ -51,32 +52,34 @@ const AnimatedText = memo(({ text, el: Wrapper = "p", className, once, underline
                 ref={ref}
                 initial="hidden"
                 animate={controls}
-                onAnimationComplete={handleAnimationComplete}
+                onAnimationComplete={handleIsAnimationComplete}
                 variants={{
                     visible: { ...animation.visible, transition: { staggerChildren: 0.05 } },
                     hidden: animation.hidden,
                 }}
             >
                 {text.split(" ").map((word, wordIndex) => {
-                    const delay = wordIndex / 10;
-
+                    const stagger = wordIndex / 10;
                     return (
                         <span
                             key={wordIndex}
                             style={{
-                                transition: `background-size ${delay + 0.1}s ease-out`,
+                                transition: `background-size ${stagger}s ease-out`,
                             }}
                             className={`inline-block style-underline style-bg-underline ${
-                                underlineWords && animationComplete && wordIndex >= underlineWords[0] && wordIndex < underlineWords[1] && "animate-underline"
+                                underlineWords && isAnimationComplete && wordIndex >= underlineWords[0] && wordIndex <= underlineWords[1] && "animate-underline"
                             }`}
                         >
                             {word.split("").map((char, charIndex) => (
                                 <motion.span
                                     key={charIndex}
                                     style={{
-                                        transition: `background-size ${delay + 0.3}s ease-out`,
+                                        transition: `background-size ${stagger + 0.3}s ease-out`,
                                     }}
-                                    className={`inline-block style-underline style-bg-underline ${animationComplete && underlineWords?.includes(wordIndex) && "animate-underline"}`}
+                                    className={`inline-block
+                                        style-underline style-bg-underline
+                                        ${isAnimationComplete && underlineWords?.includes(wordIndex) && "animate-underline"}
+                                    `}
                                     variants={animation}
                                 >
                                     {char}

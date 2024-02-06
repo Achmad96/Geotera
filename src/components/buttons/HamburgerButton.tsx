@@ -2,23 +2,39 @@
 import { useContext, useState } from "react";
 import { Variants, motion } from "framer-motion";
 import { AuthContext } from "@/providers/AuthProvider";
-import { handleSignIn, handleSignOut } from "@/components/buttons/SignInOutButton";
+import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
 import { useRouter } from "next/navigation";
 
 const itemVariant: Variants = {
     open: {
         opacity: 1,
-        x: 0,
+        y: 0,
         display: "",
         transition: { type: "spring", stiffness: 300, damping: 24 },
     },
-    closed: { opacity: 0, x: 20, display: "none", transition: { duration: 0.3 } },
+    closed: { opacity: 0, y: 20, display: "none", transition: { duration: 0.3 } },
 };
 
 const DropdownLeft = ({ isOpenState }: { isOpenState: [boolean, Function] }) => {
     const [isMenuOpen, setIsMenuOpen] = isOpenState;
     const { isAuth }: { isAuth: boolean } = useContext(AuthContext);
     const router = useRouter();
+
+    const handleSignIn = () => {
+        signInWithGoogle()
+            .then(() => {
+                router.refresh();
+            })
+            .catch((err: any) => console.log(err.message));
+    };
+    const handleSignOut = () => {
+        signOut()
+            .then(() => {
+                router.refresh();
+            })
+            .catch((err: any) => console.log(err.message));
+    };
+
     return (
         <motion.ul
             initial={false}
@@ -33,8 +49,8 @@ const DropdownLeft = ({ isOpenState }: { isOpenState: [boolean, Function] }) => 
                         type: "spring",
                         bounce: 0,
                         duration: 0.7,
-                        // delayChildren: 0.5,
-                        staggerChildren: 0.3,
+                        delayChildren: 0.1,
+                        staggerChildren: 0.2,
                     },
                 },
 
@@ -66,11 +82,9 @@ const DropdownLeft = ({ isOpenState }: { isOpenState: [boolean, Function] }) => 
                 onClick={() => {
                     setIsMenuOpen(false);
                     !isAuth ? handleSignIn() : handleSignOut();
-                    router.push("/");
-                    router.refresh();
                 }}
             >
-                {isAuth ? "Sign out" : "Sign in"}
+                {isAuth ? "Sign out" : "Sign in with Google"}
             </motion.li>
         </motion.ul>
     );

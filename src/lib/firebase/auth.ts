@@ -9,9 +9,6 @@ export async function signInWithGoogle() {
         const idToken = await userCreds.user.getIdToken();
         const response = await fetch("/api/auth/sign-in", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
             body: JSON.stringify({ idToken }),
         });
         const resBody = (await response.json()) as unknown as APIResponse<string>;
