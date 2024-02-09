@@ -1,7 +1,7 @@
-import { memo, ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 import type { StateType, ActionType } from "@/components/modals/OrderModal";
 
-const WeightInput = memo(({ state, dispatch }: { state: StateType; dispatch: (action: ActionType) => void }) => {
+const WeightInput = ({ state, dispatch }: { state: StateType; dispatch: (action: ActionType) => void }) => {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { value, min, max } = e.currentTarget;
         const weight: number = Math.max(Number(min), Math.min(Number(max), Number(value)));
@@ -30,6 +30,6 @@ const WeightInput = memo(({ state, dispatch }: { state: StateType; dispatch: (ac
             </div>
         </div>
     );
-});
+};
 
 export default WeightInput;

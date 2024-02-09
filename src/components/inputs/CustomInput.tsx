@@ -12,8 +12,8 @@ const CustomInput = memo(
     }: {
         name: string;
         type?: HTMLInputTypeAttribute;
-        onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
         label?: string;
+        onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
         placeholder?: string;
         required?: boolean;
         isTextArea?: boolean;

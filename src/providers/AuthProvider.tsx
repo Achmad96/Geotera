@@ -1,8 +1,22 @@
 import { UserRecord } from "firebase-admin/auth";
 import { ReactNode, createContext } from "react";
+import { AuthContextType } from "@/types";
 
-export const AuthContext = createContext<any>(null);
-
-export default function AuthProvider({ children, currentUser, isAuth }: { children: ReactNode; currentUser: UserRecord; isAuth: boolean }) {
-    return <AuthContext.Provider value={{ currentUser, isAuth } as { currentUser: UserRecord; isAuth: boolean }}>{children}</AuthContext.Provider>;
+export const AuthContext = createContext<AuthContextType | null>(null);
+export default function AuthProvider({
+  children,
+  user,
+  isAuth,
+}: {
+  children: ReactNode;
+  user: UserRecord;
+  isAuth: boolean;
+}) {
+  return (
+    <AuthContext.Provider
+      value={{ user, isAuth } as { user: UserRecord; isAuth: boolean }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 }

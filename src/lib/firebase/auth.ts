@@ -25,6 +25,7 @@ export async function signOut() {
     try {
         await auth.signOut();
         const response = await fetch("/api/auth/sign-out", {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },

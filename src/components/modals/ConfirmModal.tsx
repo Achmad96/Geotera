@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { memo } from "react";
 
 type ConfirmModalType = {
     title: string;
@@ -8,7 +7,7 @@ type ConfirmModalType = {
     callback: Function;
 };
 
-const ConfirmModal = memo(({ title, message, visible, callback }: ConfirmModalType) => {
+const ConfirmModal = ({ title, message, visible, callback }: ConfirmModalType) => {
     const { isVisible, dispatch } = visible;
     const handleConfirm = () => {
         if (callback) callback();
@@ -45,6 +44,6 @@ const ConfirmModal = memo(({ title, message, visible, callback }: ConfirmModalTy
             </div>
         );
     }
-});
+};
 
 export default ConfirmModal;
