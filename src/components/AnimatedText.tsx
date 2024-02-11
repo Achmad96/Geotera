@@ -47,7 +47,7 @@ const AnimatedText = ({
     }
   }, [isInView, controls]);
 
-  const handleIsAnimationComplete = (define: string) => {
+  const handleAnimationComplete = (define: string) => {
     if (define === "hidden") {
       setIsAnimationComplete(false);
     } else {
@@ -60,7 +60,7 @@ const AnimatedText = ({
         ref={ref}
         initial="hidden"
         animate={controls}
-        onAnimationComplete={handleIsAnimationComplete}
+        onAnimationComplete={handleAnimationComplete}
         variants={{
           visible: {
             ...animation.visible,
