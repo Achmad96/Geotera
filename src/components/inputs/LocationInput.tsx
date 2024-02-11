@@ -85,18 +85,16 @@ const LocationInput = ({
 
     const params: URLSearchParams = new URLSearchParams({
       q: state.query as string,
-      in:
-        !state.location.long || !state.location.lat
-          ? "countryCode:IDN"
-          : `circle:${state.location.lat},${state.location.long};r=10000`,
+      in: "countryCode:IDN",
+      at: `${state.location.lat},${state.location.long}`,
       lang: "id-ID",
+      limit: "5",
       apiKey: apiKey as string,
     });
     try {
-      const response = await fetch(`${apiUrl}?${params}`);
+      const response = await fetch(`${apiUrl}/geocode?${params}`);
       const data = await response.json();
-      console.log(data);
-      // localDispatch({ type: "SET_SUGGESTIONS", payload: data.items });
+      localDispatch({ type: "SET_SUGGESTIONS", payload: data.items });
     } catch (error) {
       console.error("Error fetching data from HERE API", error);
     }
