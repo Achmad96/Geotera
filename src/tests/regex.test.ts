@@ -1,4 +1,4 @@
-describe("Code tests", () => {
+describe("Regex tests", () => {
   it("should return as expected", () => {
     const replaceWith: any = {
       "Jalan ": "Jl.",
