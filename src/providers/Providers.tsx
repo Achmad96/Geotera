@@ -1,20 +1,14 @@
 "use client";
 
-import { UserRecord } from "firebase-admin/auth";
 import { ReactNode } from "react";
-
-import AuthProvider from "@/providers/AuthProvider";
+import AuthProvider, { AuthContextType } from "@/providers/AuthProvider";
 import OrderModalProvider from "@/providers/OrderModalProvider";
 
-export default ({
-  children,
-  user,
-  isAuth,
-}: {
+interface ProvidersInterface extends AuthContextType {
   children: ReactNode;
-  user: UserRecord;
-  isAuth: boolean;
-}): ReactNode => (
+}
+
+export default ({ children, user, isAuth }: ProvidersInterface): ReactNode => (
   <AuthProvider user={user} isAuth={isAuth}>
     <OrderModalProvider>{children}</OrderModalProvider>
   </AuthProvider>

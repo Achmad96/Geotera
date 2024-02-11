@@ -16,7 +16,7 @@ export type LocationInputActionType = {
 
 export type LocationInputStateType = {
   query: string;
-  suggestions: string[];
+  suggestions: LocationItemType[];
   location: LocationType;
 };
 
@@ -24,7 +24,9 @@ type LocationType = {
   long: number;
   lat: number;
 };
-
+interface LocationItemType extends LocationType {
+  name: string;
+}
 const replaceWith: any = {
   "Jalan ": "Jl.",
 };
@@ -93,7 +95,8 @@ const LocationInput = ({
     try {
       const response = await fetch(`${apiUrl}?${params}`);
       const data = await response.json();
-      localDispatch({ type: "SET_SUGGESTIONS", payload: data.items });
+      console.log(data);
+      // localDispatch({ type: "SET_SUGGESTIONS", payload: data.items });
     } catch (error) {
       console.error("Error fetching data from HERE API", error);
     }

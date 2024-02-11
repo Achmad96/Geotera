@@ -5,6 +5,7 @@ export type AuthContextType = {
   user: UserRecord;
   isAuth: boolean;
 };
+
 export const AuthContext = createContext<AuthContextType | null>(null);
 export default function AuthProvider({
   children,

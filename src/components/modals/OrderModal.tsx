@@ -16,11 +16,10 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { db } from "@/lib/firebase";
 import { AuthContext, AuthContextType } from "@/providers/AuthProvider";
-import { OrderTypes } from "@/types";
+import { OrderStatus, OrderTypes } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { arrayUnion, doc, setDoc } from "firebase/firestore";
-import { validate_date } from "@/utils/DateUtils";
 
 import ConfirmModal from "@/components/modals/ConfirmModal";
 
@@ -28,6 +27,9 @@ import LocationInput from "@/components/inputs/LocationInput";
 import WeightInput from "@/components/inputs/WeightInput";
 import DateInput from "@/components/inputs/CustomInput";
 import NotesInput from "@/components/inputs/CustomInput";
+import { isDateValid } from "@/utils/DateUtils";
+import { toast } from "react-toastify";
+import { defaultToastConfig } from "@/utils/ToastConfig";
 
 export type OrderModalStateType = {
   formDatas: OrderTypes;
@@ -83,16 +85,23 @@ const OrderModal = () => {
   }, [isModalOpen]);
 
   const onOrder = async () => {
-    validate_date(state.formDatas.date);
-    const orderDocs = doc(db, `users/${user!.uid}`);
-    await setDoc(
-      orderDocs,
-      { orders: arrayUnion({ id: uuidv4(), ...state.formDatas }) },
-      { merge: true },
-    );
-    document
-      .querySelectorAll<HTMLInputElement>("form input,select,textarea")
-      .forEach((v: HTMLInputElement) => (v.value = ""));
+    try {
+      dispatch({
+        type: "SET_FORM_DATAS",
+        payload: { id: uuidv4(), status: OrderStatus.Pending },
+      });
+      const orderDocs = doc(db, `users/${user!.uid}`);
+      await setDoc(
+        orderDocs,
+        { orders: arrayUnion(state.formDatas) },
+        { merge: true },
+      );
+      document
+        .querySelectorAll<HTMLInputElement>("form input,select,textarea")
+        .forEach((v: HTMLInputElement) => (v.value = ""));
+    } catch (e: any) {
+      console.log(e.message);
+    }
   };
 
   return (
@@ -139,13 +148,23 @@ const OrderModal = () => {
             <WeightInput state={state} dispatch={dispatch} />
             <DateInput
               name="date"
-              type="date"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                dispatch({
-                  type: "SET_FORM_DATAS",
-                  payload: { date: e.target.value },
-                })
-              }
+              type="datetime-local"
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                const date = new Date(e.target.value);
+                if (isDateValid(date)) {
+                  dispatch({
+                    type: "SET_FORM_DATAS",
+                    payload: {
+                      date,
+                    },
+                  });
+                } else {
+                  toast.error(
+                    "The date must be equal or greater than 1 hour from now!",
+                    defaultToastConfig,
+                  );
+                }
+              }}
               required={true}
             />
             <NotesInput
