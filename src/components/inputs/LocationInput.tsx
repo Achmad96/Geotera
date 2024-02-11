@@ -17,7 +17,7 @@ export type LocationInputActionType = {
 export type LocationInputStateType = {
   query: string;
   suggestions: LocationItemType[];
-  location: LocationType;
+  currentLocation: LocationType;
 };
 
 type LocationType = {
@@ -41,7 +41,7 @@ const reducer = (
     case "SET_SUGGESTIONS":
       return { ...state, suggestions: action.payload };
     case "SET_CURRENT_LOCATION":
-      return { ...state, location: action.payload };
+      return { ...state, currentLocation: action.payload };
     default:
       return state;
   }
@@ -55,14 +55,14 @@ const LocationInput = ({
   const [state, localDispatch] = useReducer(reducer, {
     query: "",
     suggestions: [],
-    location: { long: 0, lat: 0 },
+    currentLocation: { long: 0, lat: 0 },
   });
   const ref = useRef<HTMLInputElement | null>(null);
 
   const fetchSuggestions = async () => {
     const apiUrl = process.env.NEXT_PUBLIC_HERE_API_URL;
     const apiKey = process.env.NEXT_PUBLIC_HERE_API_KEY;
-    if (!state.location.long || !state.location.lat) {
+    if (!state.currentLocation.long || !state.currentLocation.lat) {
       const permissionStatus: PermissionStatus =
         await navigator.permissions.query({
           name: "geolocation",
@@ -86,7 +86,7 @@ const LocationInput = ({
     const params: URLSearchParams = new URLSearchParams({
       q: state.query as string,
       in: "countryCode:IDN",
-      at: `${state.location.lat},${state.location.long}`,
+      at: `${state.currentLocation.lat},${state.currentLocation.long}`,
       lang: "id-ID",
       limit: "5",
       apiKey: apiKey as string,
