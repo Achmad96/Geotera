@@ -1,8 +1,10 @@
 "use client";
+
 import { UserRecord } from "firebase-admin/auth";
+import { ReactNode } from "react";
+
 import AuthProvider from "@/providers/AuthProvider";
 import OrderModalProvider from "@/providers/OrderModalProvider";
-import { ReactNode } from "react";
 
 export default ({
   children,

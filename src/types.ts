@@ -2,7 +2,7 @@ import { UserRecord } from "firebase-admin/auth";
 import { Dispatch, SetStateAction } from "react";
 
 export type APIResponse<T = object> =
-  | { success: true; data?: T; messages: string }
+  | { success: true; data: T }
   | { success: false; error: string };
 
 export type OrderTypes = {
@@ -20,10 +20,21 @@ export type OrderModalContextType = {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 };
 
+export type OrderModalStateType = {
+  formDatas: OrderTypes;
+  isVisible: boolean;
+};
+
+export type OrderModalActionType = {
+  type: "SET_FORM_DATAS" | "SET_VISIBILITY";
+  payload: any;
+};
+
 export type AuthContextType = {
   user: UserRecord;
   isAuth: boolean;
 };
+
 export type NotificationsType = {
   title: string;
   message: string;

@@ -1,4 +1,5 @@
 "use client";
+
 import React, {
   useContext,
   useReducer,
@@ -9,7 +10,11 @@ import React, {
 } from "react";
 
 import { OrderModalContext } from "@/providers/OrderModalProvider";
-import { OrderModalContextType } from "@/types";
+import {
+  OrderModalContextType,
+  OrderModalStateType,
+  OrderModalActionType,
+} from "@/types";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "@/lib/firebase";
 import { AuthContext } from "@/providers/AuthProvider";
@@ -27,17 +32,7 @@ import WeightInput from "@/components/inputs/WeightInput";
 import DateInput from "@/components/inputs/CustomInput";
 import NotesInput from "@/components/inputs/CustomInput";
 
-export type StateType = {
-  formDatas: OrderTypes;
-  isVisible: boolean;
-};
-
-export type ActionType = {
-  type: "SET_FORM_DATAS" | "SET_VISIBILITY";
-  payload: any;
-};
-
-const initialState: StateType = {
+const initialState: OrderModalStateType = {
   formDatas: {
     weight: 100,
     prices: 90,
@@ -45,7 +40,10 @@ const initialState: StateType = {
   isVisible: false,
 };
 
-const formReducer = (state: StateType, action: ActionType): StateType => {
+const formReducer = (
+  state: OrderModalStateType,
+  action: OrderModalActionType,
+): OrderModalStateType => {
   switch (action.type) {
     case "SET_FORM_DATAS":
       return { ...state, formDatas: { ...state.formDatas, ...action.payload } };
@@ -147,6 +145,7 @@ const OrderModal = () => {
               label="Notes (optional)"
               name="notes"
               isTextArea={true}
+              required={false}
               placeholder="Note(s) to rubbish collectors"
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 dispatch({

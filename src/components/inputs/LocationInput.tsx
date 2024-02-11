@@ -6,9 +6,10 @@ import React, {
   ChangeEvent,
 } from "react";
 import { debounce } from "lodash";
-import { ActionType } from "@/components/modals/OrderModal";
+import { OrderModalActionType } from "@/types";
+import LocationItemButton from "@/components/buttons/LocationItemButton";
 
-type SearchActionType = {
+export type LocationInputActionType = {
   type: "SET_QUERY" | "SET_SUGGESTIONS" | "SET_CURRENT_LOCATION";
   payload?: any;
 };
@@ -18,18 +19,20 @@ type LocationType = {
   lat: number;
 };
 
-type StateType = {
+export type LocationInputStateType = {
   query: string;
   suggestions: string[];
   location: LocationType;
 };
 
-const matchersLocation: any = {
+const replaceWith: any = {
   "Jalan ": "Jl.",
-  ", Indonesia": "",
 };
 
-const reducer = (state: StateType, action: SearchActionType): StateType => {
+const reducer = (
+  state: LocationInputStateType,
+  action: LocationInputActionType,
+): LocationInputStateType => {
   switch (action.type) {
     case "SET_QUERY":
       return { ...state, query: action.payload };
@@ -45,7 +48,7 @@ const reducer = (state: StateType, action: SearchActionType): StateType => {
 const LocationInput = ({
   dispatch,
 }: {
-  dispatch: (action: ActionType) => void;
+  dispatch: (action: OrderModalActionType) => void;
 }) => {
   const [state, localDispatch] = useReducer(reducer, {
     query: "",
@@ -109,7 +112,7 @@ const LocationInput = ({
   }, [state.query]);
 
   return (
-    <div className="flex flex-col justify-start gap-5 w-full">
+    <div className="flex flex-col justify-start gap-5 w-full relative">
       <p>Location</p>
       <input
         name="location"
@@ -136,55 +139,23 @@ const LocationInput = ({
       <div
         className={"absolute bg-white w-[80%] hover:cursor-pointer"}
         style={{
-          top: `${ref.current && Math.floor(ref.current.getBoundingClientRect().bottom - ref.current.getBoundingClientRect().height - 10)}px`,
+          top: `${ref.current && ref.current?.offsetHeight + ref.current?.scrollHeight}px`,
         }}
       >
         {state.suggestions?.map((item: any, index: number) => {
           const location: any = item.address.label.replace(
             /Jalan |, [0-9]{5}, Indonesia/g,
-            function (m: string) {
-              return matchersLocation[m];
-            },
+            (m: any) => (!replaceWith[m] ? "" : replaceWith[m]),
           );
           return (
-            <button
+            <LocationItemButton
               key={index}
-              onKeyDown={(e: KeyboardEvent<HTMLButtonElement>) => {
-                e.preventDefault();
-                if (e.key === "Enter") {
-                  localDispatch({
-                    type: "SET_SUGGESTIONS",
-                    payload: undefined,
-                  });
-                  localDispatch({ type: "SET_QUERY", payload: location });
-                  dispatch({
-                    type: "SET_FORM_DATAS",
-                    payload: { location: location },
-                  });
-                } else if (e.key === "ArrowDown") {
-                  const btn = document.querySelector(
-                    `.suggest-${index !== state.suggestions.length - 1 ? index + 1 : 0}`,
-                  ) as HTMLElement;
-                  btn?.focus();
-                } else if (e.key === "ArrowUp") {
-                  const btn = document.querySelector(
-                    `.suggest-${index !== 0 ? index - 1 : state.suggestions.length - 1}`,
-                  ) as HTMLElement;
-                  btn?.focus();
-                }
-              }}
-              onClick={() => {
-                localDispatch({ type: "SET_SUGGESTIONS", payload: undefined });
-                localDispatch({ type: "SET_QUERY", payload: location });
-                dispatch({
-                  type: "SET_FORM_DATAS",
-                  payload: { location: location },
-                });
-              }}
-              className={`text-left w-full pl-3 text-md focus:bg-neutral-200 focus:outline-none hover:bg-neutral-200 max-lg:text-sm max-sm:pl-2 max-sm:text-xs suggest-${index}`}
-            >
-              {location}
-            </button>
+              index={index}
+              state={state}
+              location={location}
+              localDispatch={localDispatch}
+              dispatch={dispatch}
+            />
           );
         })}
       </div>
