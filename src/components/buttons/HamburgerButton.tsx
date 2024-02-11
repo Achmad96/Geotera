@@ -1,8 +1,7 @@
 "use client";
 import { useContext, useState } from "react";
 import { Variants, motion } from "framer-motion";
-import { AuthContext } from "@/providers/AuthProvider";
-import { AuthContextType } from "@/types";
+import { AuthContext, AuthContextType } from "@/providers/AuthProvider";
 import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
 import { useRouter } from "next/navigation";
 

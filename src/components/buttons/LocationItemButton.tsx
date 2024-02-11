@@ -3,7 +3,7 @@ import {
   LocationInputActionType,
   LocationInputStateType,
 } from "@/components/inputs/LocationInput";
-import { OrderModalActionType } from "@/types";
+import type { OrderModalActionType } from "@/components/modals/OrderModal";
 
 type LocationItemType = {
   index: number;

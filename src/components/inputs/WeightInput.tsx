@@ -1,5 +1,8 @@
 import { ChangeEvent } from "react";
-import type { OrderModalStateType, OrderModalActionType } from "@/types";
+import type {
+  OrderModalStateType,
+  OrderModalActionType,
+} from "@/components/modals/OrderModal";
 
 const WeightInput = ({
   state,

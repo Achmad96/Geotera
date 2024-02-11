@@ -1,11 +1,12 @@
 "use client";
-import { AuthContextType } from "@/types";
-import { AuthContext } from "@/providers/AuthProvider";
+import { AuthContext, AuthContextType } from "@/providers/AuthProvider";
 import { defaultToastConfig } from "@/utils/ToastConfig";
 import { useContext } from "react";
 import { toast } from "react-toastify";
-import { OrderModalContext } from "@/providers/OrderModalProvider";
-import { OrderModalContextType } from "@/types";
+import {
+  OrderModalContext,
+  OrderModalContextType,
+} from "@/providers/OrderModalProvider";
 
 export default function OrderButton() {
   const { isAuth } = useContext(AuthContext) as AuthContextType;

@@ -2,8 +2,7 @@
 import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import { AuthContext } from "@/providers/AuthProvider";
-import { AuthContextType } from "@/types";
+import { AuthContext, AuthContextType } from "@/providers/AuthProvider";
 
 export default function SignInOutButton() {
   const { isAuth } = useContext(AuthContext) as AuthContextType;

@@ -1,5 +1,15 @@
-import { ReactNode, createContext, useState } from "react";
-import { OrderModalContextType } from "@/types";
+import {
+  ReactNode,
+  createContext,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from "react";
+
+export type OrderModalContextType = {
+  isModalOpen?: boolean;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+};
 
 export const OrderModalContext = createContext<OrderModalContextType | null>(
   null,

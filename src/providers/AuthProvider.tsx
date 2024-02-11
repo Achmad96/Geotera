@@ -1,7 +1,10 @@
 import { UserRecord } from "firebase-admin/auth";
 import { ReactNode, createContext } from "react";
-import { AuthContextType } from "@/types";
 
+export type AuthContextType = {
+  user: UserRecord;
+  isAuth: boolean;
+};
 export const AuthContext = createContext<AuthContextType | null>(null);
 export default function AuthProvider({
   children,

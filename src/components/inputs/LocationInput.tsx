@@ -5,8 +5,8 @@ import React, {
   KeyboardEvent,
   ChangeEvent,
 } from "react";
+import type { OrderModalActionType } from "@/components/modals/OrderModal";
 import { debounce } from "lodash";
-import { OrderModalActionType } from "@/types";
 import LocationItemButton from "@/components/buttons/LocationItemButton";
 
 export type LocationInputActionType = {
@@ -14,15 +14,15 @@ export type LocationInputActionType = {
   payload?: any;
 };
 
-type LocationType = {
-  long: number;
-  lat: number;
-};
-
 export type LocationInputStateType = {
   query: string;
   suggestions: string[];
   location: LocationType;
+};
+
+type LocationType = {
+  long: number;
+  lat: number;
 };
 
 const replaceWith: any = {
@@ -98,9 +98,7 @@ const LocationInput = ({
       console.error("Error fetching data from HERE API", error);
     }
   };
-
   const debouncedFetchSuggestions = debounce(fetchSuggestions, 1000);
-
   useEffect(() => {
     if (state.query.length > 2 && state.suggestions !== undefined) {
       debouncedFetchSuggestions();
@@ -133,17 +131,17 @@ const LocationInput = ({
           }
         }}
         placeholder="Search for locations"
-        className="w-[90%] outline-none h-10 border-b-1 max-sm:text-sm pl-2"
+        className="w-[90%] outline-none h-10 max-sm:text-sm pl-2 border-b"
         required
       />
       <div
         className={"absolute bg-white w-[80%] hover:cursor-pointer"}
         style={{
-          top: `${ref.current && ref.current?.offsetHeight + ref.current?.scrollHeight}px`,
+          top: `${ref.current && ref.current?.offsetHeight + ref.current?.scrollHeight + 10}px`,
         }}
       >
         {state.suggestions?.map((item: any, index: number) => {
-          const location: any = item.address.label.replace(
+          const location: string = item.address.label.replace(
             /Jalan |, [0-9]{5}, Indonesia/g,
             (m: any) => (!replaceWith[m] ? "" : replaceWith[m]),
           );

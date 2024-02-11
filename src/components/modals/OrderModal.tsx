@@ -9,16 +9,13 @@ import React, {
   ChangeEvent,
 } from "react";
 
-import { OrderModalContext } from "@/providers/OrderModalProvider";
 import {
+  OrderModalContext,
   OrderModalContextType,
-  OrderModalStateType,
-  OrderModalActionType,
-} from "@/types";
+} from "@/providers/OrderModalProvider";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "@/lib/firebase";
-import { AuthContext } from "@/providers/AuthProvider";
-import { AuthContextType } from "@/types";
+import { AuthContext, AuthContextType } from "@/providers/AuthProvider";
 import { OrderTypes } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { IoIosCloseCircleOutline } from "react-icons/io";
@@ -31,6 +28,16 @@ import LocationInput from "@/components/inputs/LocationInput";
 import WeightInput from "@/components/inputs/WeightInput";
 import DateInput from "@/components/inputs/CustomInput";
 import NotesInput from "@/components/inputs/CustomInput";
+
+export type OrderModalStateType = {
+  formDatas: OrderTypes;
+  isVisible: boolean;
+};
+
+export type OrderModalActionType = {
+  type: "SET_FORM_DATAS" | "SET_VISIBILITY";
+  payload: any;
+};
 
 const initialState: OrderModalStateType = {
   formDatas: {
