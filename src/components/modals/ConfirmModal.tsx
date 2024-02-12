@@ -3,20 +3,20 @@ import { motion } from "framer-motion";
 type ConfirmModalPropsType = {
   title: string;
   message: string;
-  visible: { isVisible: boolean; dispatch: Function };
+  visibility: { isVisible: boolean; dispatch: Function };
   callback: Function;
 };
 
 const ConfirmModal = ({
   title,
   message,
-  visible,
+  visibility,
   callback,
 }: ConfirmModalPropsType) => {
-  const { isVisible, dispatch } = visible;
+  const { isVisible, dispatch } = visibility;
   const handleConfirm = () => {
     callback();
-    dispatch({ type: "SET_VISIBILITY", payload: false });
+    dispatch({ type: "orderModalVisibility", payload: false });
   };
 
   if (isVisible) {
@@ -41,9 +41,9 @@ const ConfirmModal = ({
             </button>
             <button
               className="bg-slate-50 rounded-full p-3 px-7 shadow-2xl hover:bg-slate-100 max-sm:px-2"
-              onClick={() => {
-                dispatch({ type: "SET_VISIBILITY", payload: false });
-              }}
+              onClick={() =>
+                dispatch({ type: "orderModalVisibility", payload: false })
+              }
             >
               Cancel
             </button>

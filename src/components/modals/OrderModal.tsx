@@ -32,17 +32,17 @@ import { toast } from "react-toastify";
 import { defaultToastConfig } from "@/utils/ToastConfig";
 
 export type OrderModalStateType = {
-  formDatas: OrderTypes;
+  formData: OrderTypes;
   isVisible: boolean;
 };
 
 export type OrderModalActionType = {
-  type: "SET_FORM_DATAS" | "SET_VISIBILITY";
+  type: "orderFormData" | "orderModalVisibility";
   payload: any;
 };
 
 const initialState: OrderModalStateType = {
-  formDatas: {
+  formData: {
     weight: 100,
     prices: 90,
   } as OrderTypes,
@@ -54,9 +54,9 @@ const formReducer = (
   action: OrderModalActionType,
 ): OrderModalStateType => {
   switch (action.type) {
-    case "SET_FORM_DATAS":
-      return { ...state, formDatas: { ...state.formDatas, ...action.payload } };
-    case "SET_VISIBILITY":
+    case "orderFormData":
+      return { ...state, formData: { ...state.formData, ...action.payload } };
+    case "orderModalVisibility":
       return { ...state, isVisible: action.payload };
     default:
       return state;
@@ -87,13 +87,13 @@ const OrderModal = () => {
   const onOrder = async () => {
     try {
       dispatch({
-        type: "SET_FORM_DATAS",
+        type: "orderFormData",
         payload: { id: uuidv4(), status: OrderStatus.Pending },
       });
       const orderDocs = doc(db, `users/${user!.uid}`);
       await setDoc(
         orderDocs,
-        { orders: arrayUnion(state.formDatas) },
+        { orders: arrayUnion(state.formData) },
         { merge: true },
       );
       document
@@ -110,7 +110,7 @@ const OrderModal = () => {
         <form
           onSubmit={(e: FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-            dispatch({ type: "SET_VISIBILITY", payload: true });
+            dispatch({ type: "orderModalVisibility", payload: true });
           }}
           className={
             "fixed flex justify-center items-center w-full h-dvh z-20 bg-transparent top-0 bottom-0"
@@ -127,7 +127,7 @@ const OrderModal = () => {
           <ConfirmModal
             title="Hold on!"
             message="The data cannot be changed, do you want to confirm?"
-            visible={{ isVisible: state.isVisible, dispatch }}
+            visibility={{ isVisible: state.isVisible, dispatch }}
             callback={onOrder}
           />
           <motion.div
@@ -153,7 +153,7 @@ const OrderModal = () => {
                 const date = new Date(e.target.value);
                 if (isDateValid(date)) {
                   dispatch({
-                    type: "SET_FORM_DATAS",
+                    type: "orderFormData",
                     payload: {
                       date,
                     },
@@ -175,7 +175,7 @@ const OrderModal = () => {
               placeholder="Note(s) to rubbish collectors"
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 dispatch({
-                  type: "SET_FORM_DATAS",
+                  type: "orderFormData",
                   payload: { notes: e.target.value },
                 })
               }

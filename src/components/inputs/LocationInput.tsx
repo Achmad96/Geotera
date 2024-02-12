@@ -10,23 +10,22 @@ import { debounce } from "lodash";
 import LocationItemButton from "@/components/buttons/LocationItemButton";
 
 export type LocationInputActionType = {
-  type: "SET_QUERY" | "SET_SUGGESTIONS" | "SET_CURRENT_LOCATION";
+  type: "query" | "suggestions" | "currentLocation";
   payload?: any;
 };
 
 export type LocationInputStateType = {
   query: string;
-  suggestions: LocationItemType[];
+  suggestions: LocationType[];
   currentLocation: LocationType;
 };
 
-type LocationType = {
+export interface LocationType {
+  name: string;
   long: number;
   lat: number;
-};
-interface LocationItemType extends LocationType {
-  name: string;
 }
+
 const replaceWith: any = {
   "Jalan ": "Jl.",
 };
@@ -36,11 +35,11 @@ const reducer = (
   action: LocationInputActionType,
 ): LocationInputStateType => {
   switch (action.type) {
-    case "SET_QUERY":
+    case "query":
       return { ...state, query: action.payload };
-    case "SET_SUGGESTIONS":
+    case "suggestions":
       return { ...state, suggestions: action.payload };
-    case "SET_CURRENT_LOCATION":
+    case "currentLocation":
       return { ...state, currentLocation: action.payload };
     default:
       return state;
@@ -55,7 +54,7 @@ const LocationInput = ({
   const [state, localDispatch] = useReducer(reducer, {
     query: "",
     suggestions: [],
-    currentLocation: { long: 0, lat: 0 },
+    currentLocation: { name: "", long: 0, lat: 0 },
   });
   const ref = useRef<HTMLInputElement | null>(null);
 
@@ -71,8 +70,9 @@ const LocationInput = ({
         navigator.geolocation.getCurrentPosition(
           (position: GeolocationPosition) => {
             localDispatch({
-              type: "SET_CURRENT_LOCATION",
+              type: "currentLocation",
               payload: {
+                name: "Your Location",
                 lat: position.coords.latitude,
                 long: position.coords.longitude,
               },
@@ -94,7 +94,7 @@ const LocationInput = ({
     try {
       const response = await fetch(`${apiUrl}/geocode?${params}`);
       const data = await response.json();
-      localDispatch({ type: "SET_SUGGESTIONS", payload: data.items });
+      localDispatch({ type: "suggestions", payload: data.items });
     } catch (error) {
       console.error("Error fetching data from HERE API", error);
     }
@@ -104,7 +104,7 @@ const LocationInput = ({
     if (state.query.length > 2 && state.suggestions !== undefined) {
       debouncedFetchSuggestions();
     } else {
-      localDispatch({ type: "SET_SUGGESTIONS", payload: [] });
+      localDispatch({ type: "suggestions", payload: [] });
     }
 
     return () => debouncedFetchSuggestions.cancel();
@@ -120,15 +120,13 @@ const LocationInput = ({
         value={state.query}
         autoComplete="off"
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          localDispatch({ type: "SET_QUERY", payload: e.target.value })
+          localDispatch({ type: "query", payload: e.target.value })
         }
         onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
-          if (state.suggestions?.length > 0) {
-            if (e.key === "ArrowDown") {
-              e.preventDefault();
-              const btn = document.querySelector(".suggest-0") as HTMLElement;
-              btn?.focus();
-            }
+          if (state.suggestions?.length > 0 && e.key === "ArrowDown") {
+            e.preventDefault();
+            const btn = document.querySelector(".suggest-0") as HTMLElement;
+            btn?.focus();
           }
         }}
         placeholder="Search for locations"
@@ -142,10 +140,14 @@ const LocationInput = ({
         }}
       >
         {state.suggestions?.map((item: any, index: number) => {
-          const location: string = item.address.label.replace(
-            /Jalan |, [0-9]{5}, Indonesia/g,
-            (m: any) => (!replaceWith[m] ? "" : replaceWith[m]),
-          );
+          const location: LocationType = {
+            name: item.address.label.replace(
+              /Jalan |, [0-9]{5}, Indonesia/g,
+              (m: any) => (!replaceWith[m] ? "" : replaceWith[m]),
+            ),
+            long: 0,
+            lat: 0,
+          };
           return (
             <LocationItemButton
               key={index}

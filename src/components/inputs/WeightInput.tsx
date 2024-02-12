@@ -18,7 +18,7 @@ const WeightInput = ({
       Math.min(Number(max), Number(value)),
     );
     dispatch({
-      type: "SET_FORM_DATAS",
+      type: "orderFormData",
       payload: { weight, prices: weight ? weight * 0.9 : 90 },
     });
   };
@@ -30,7 +30,7 @@ const WeightInput = ({
         <input
           name="weight"
           type="number"
-          value={state.formDatas.weight}
+          value={state.formData?.weight ? state.formData?.weight : 100}
           placeholder="Garbage weight"
           onChange={handleChange}
           className="w-full h-10 outline-none border-b pl-2"
@@ -46,7 +46,7 @@ const WeightInput = ({
           name="prices"
           className="w-[74%] h-10 outline-none border-b pl-2"
           placeholder="prices"
-          value={state.formDatas?.prices ? state.formDatas.prices : 90}
+          value={state.formData?.prices ? state.formData.prices : 90}
           disabled
         />
       </div>
