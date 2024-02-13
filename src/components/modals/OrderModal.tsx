@@ -165,7 +165,7 @@ const OrderModal = () => {
                   });
                 } else {
                   toast.error(
-                    "The date must be equal or greater than 1 hour from now!",
+                    "The time must be equal or greater than 1 hour from now!",
                     defaultToastConfig,
                   );
                 }
