@@ -36,7 +36,7 @@ const AnimatedText = ({
   const ref = useRef(null);
   const isInView = useInView(ref, { once });
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
-  let delay = 0;
+  let delay = 0; // in seconds
 
   useEffect(() => {
     if (isInView) {
