@@ -8,17 +8,17 @@ import { useRouter } from "next/navigation";
 const itemVariant: Variants = {
   open: {
     opacity: 1,
-    y: 0,
+    x: 0,
     display: "",
     transition: { type: "spring", stiffness: 300, damping: 24 },
   },
-  closed: { opacity: 0, y: 20, display: "none", transition: { duration: 0.3 } },
+  closed: { opacity: 0, x: 50, transition: { duration: 0.3 } },
 };
 
 const DropdownLeft = ({
   isOpenState,
 }: {
-  isOpenState: [boolean, Function];
+  isOpenState: [boolean, (v: boolean) => void];
 }) => {
   const [isMenuOpen, setIsMenuOpen] = isOpenState;
   const { isAuth } = useContext(AuthContext) as AuthContextType;
@@ -42,31 +42,29 @@ const DropdownLeft = ({
       variants={{
         open: {
           opacity: 1,
-          y: 10,
-          x: 0,
+          y: 0,
           display: "",
           transition: {
             type: "spring",
             bounce: 0,
             duration: 0.7,
-            delayChildren: 0.1,
+            delayChildren: 0.2,
             staggerChildren: 0.2,
           },
         },
 
         closed: {
           opacity: 0,
-          x: 50,
+          y: -50,
           display: "none",
           transition: {
             type: "spring",
             bounce: 0,
             duration: 0.3,
-            delayChildren: 0.3,
           },
         },
       }}
-      className="flex flex-col absolute right-0 z-[1] menu p-2 mr-3 [&>*]:p-2 shadow bg-base-100 text-center rounded-box w-[80%]"
+      className="flex flex-col justify-center absolute border right-3 z-[1] h-52 shadow bg-base-100 text-center rounded-box w-[95%] [&>*]:p-2 gap-2"
     >
       <motion.a
         variants={itemVariant}
