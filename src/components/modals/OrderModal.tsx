@@ -177,7 +177,7 @@ const OrderModal = () => {
               name="notes"
               isTextArea={true}
               required={false}
-              placeholder="Note(s) to rubbish collectors"
+              placeholder="Notes to rubbish collectors"
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 if (e.target.value.length <= 100) {
                   dispatch({
