@@ -9,12 +9,16 @@ export enum OrderStatus {
 
 export type OrderTypes = {
   key: string;
-  location: string;
+  location: {
+    name: string;
+    long: number;
+    lat: number;
+  };
   date: string;
   weight: number;
   prices: number;
   status: OrderStatus;
-  notes?: string;
+  notes: string | null;
 };
 
 export type NotificationsType = {

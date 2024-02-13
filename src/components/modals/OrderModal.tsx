@@ -43,8 +43,14 @@ export type OrderModalActionType = {
 
 const initialState: OrderModalStateType = {
   formData: {
+    location: {
+      name: "",
+      long: 0,
+      lat: 0,
+    },
     weight: 100,
     prices: 90,
+    notes: null,
   } as OrderTypes,
   isVisible: false,
 };
@@ -72,12 +78,9 @@ const OrderModal = () => {
   useEffect(() => {
     if (isModalOpen) {
       document.documentElement.style.overflowY = "hidden";
-      const elements: HTMLInputElement[] = Array.from(
-        document.querySelectorAll<HTMLInputElement>(
-          "input[type=text],textarea",
-        ),
-      );
-      elements && elements[0].focus();
+      const element: HTMLInputElement | null =
+        document.querySelector<HTMLInputElement>("input[type=text]");
+      element && element.focus();
     }
     return () => {
       document.documentElement.style.overflowY = "auto";
@@ -173,12 +176,19 @@ const OrderModal = () => {
               isTextArea={true}
               required={false}
               placeholder="Note(s) to rubbish collectors"
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                dispatch({
-                  type: "orderFormData",
-                  payload: { notes: e.target.value },
-                })
-              }
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                if (e.target.value.length <= 100) {
+                  dispatch({
+                    type: "orderFormData",
+                    payload: { notes: e.target.value },
+                  });
+                } else {
+                  toast.error(
+                    "Notes must be less or equal than 100 characters.",
+                    defaultToastConfig,
+                  );
+                }
+              }}
             />
             <button type="submit" className="btn-geo">
               Submit

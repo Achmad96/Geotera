@@ -34,11 +34,12 @@ const CustomInput = ({
           ref={ref}
           name={name}
           placeholder={placeholder}
-          className="w-[90%] min-h-10 max-h-[120px] overflow-y-hidden outline-none border-b pl-2 resize-none"
+          className="w-[90%] min-h-12 max-h-[7.5rem] overflow-y-hidden outline-none border-b pl-2 resize-none"
           onChange={onChange}
           required={required}
           autoComplete="off"
           rows={1}
+          maxLength={100}
           onInput={(e: FormEvent<HTMLTextAreaElement>) => {
             if (ref.current && e.currentTarget.scrollHeight <= 120) {
               ref.current.style.height = "auto";

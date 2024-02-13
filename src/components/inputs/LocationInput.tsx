@@ -14,9 +14,19 @@ export type LocationInputActionType = {
   payload?: any;
 };
 
+type locationsResponseType = {
+  address: {
+    label: string;
+  };
+  position: {
+    lng: number;
+    lat: number;
+  };
+};
+
 export type LocationInputStateType = {
   query: string;
-  suggestions: LocationType[];
+  suggestions: locationsResponseType[];
   currentLocation: LocationType;
 };
 
@@ -99,6 +109,7 @@ const LocationInput = ({
       console.error("Error fetching data from HERE API", error);
     }
   };
+
   const debouncedFetchSuggestions = debounce(fetchSuggestions, 1000);
   useEffect(() => {
     if (state.query.length > 2 && state.suggestions !== undefined) {
@@ -111,7 +122,7 @@ const LocationInput = ({
   }, [state.query]);
 
   return (
-    <div className="flex flex-col justify-start gap-5 w-full relative">
+    <div className="flex flex-col relative w-full justify-start gap-5">
       <p>Location</p>
       <input
         name="location"
@@ -130,7 +141,7 @@ const LocationInput = ({
           }
         }}
         placeholder="Search for locations"
-        className="w-[90%] outline-none h-10 max-sm:text-sm pl-2 border-b"
+        className="w-[90%] pl-2 border-b outline-none h-10 max-sm:text-sm"
         required
       />
       <div
@@ -139,26 +150,28 @@ const LocationInput = ({
           top: `${ref.current && ref.current?.offsetHeight + ref.current?.scrollHeight + 10}px`,
         }}
       >
-        {state.suggestions?.map((item: any, index: number) => {
-          const location: LocationType = {
-            name: item.address.label.replace(
-              /Jalan |, [0-9]{5}, Indonesia/g,
-              (m: any) => (!replaceWith[m] ? "" : replaceWith[m]),
-            ),
-            long: 0,
-            lat: 0,
-          };
-          return (
-            <LocationItemButton
-              key={index}
-              index={index}
-              state={state}
-              location={location}
-              localDispatch={localDispatch}
-              dispatch={dispatch}
-            />
-          );
-        })}
+        {state.suggestions?.map(
+          (item: locationsResponseType, index: number) => {
+            const location: LocationType = {
+              name: item.address.label.replace(
+                /Jalan |, [0-9]{5}, Indonesia/g,
+                (m: any) => (!replaceWith[m] ? "" : replaceWith[m]),
+              ),
+              long: item.position.lng,
+              lat: item.position.lat,
+            };
+            return (
+              <LocationItemButton
+                key={index}
+                index={index}
+                state={state}
+                location={location}
+                localDispatch={localDispatch}
+                dispatch={dispatch}
+              />
+            );
+          },
+        )}
       </div>
     </div>
   );
