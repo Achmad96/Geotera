@@ -102,8 +102,10 @@ const OrderModal = () => {
       document
         .querySelectorAll<HTMLInputElement>("form input,select,textarea")
         .forEach((v: HTMLInputElement) => (v.value = ""));
+      toast.success("Successfully place an order!", defaultToastConfig);
     } catch (e: any) {
       console.log(e.message);
+      toast.error("Failed to place an order!", defaultToastConfig);
     }
   };
 
