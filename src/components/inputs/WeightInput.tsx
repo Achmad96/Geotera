@@ -19,7 +19,7 @@ const WeightInput = ({
     );
     dispatch({
       type: "orderFormData",
-      payload: { weight, prices: weight ? weight * 0.9 : 90 },
+      payload: { weight, prices: weight ? Math.ceil(weight * 0.9) : 90 },
     });
   };
 

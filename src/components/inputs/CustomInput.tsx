@@ -47,11 +47,7 @@ const CustomInput = ({
             }
           }}
           onKeyDown={(e: KeyboardEvent<HTMLTextAreaElement>) => {
-            if (
-              ref.current &&
-              e.key === "Enter" &&
-              ref.current.scrollHeight >= 120
-            ) {
+            if (ref.current && e.key === "Enter") {
               e.preventDefault();
             }
           }}
