@@ -6,7 +6,7 @@ import HamburgerButton from "@/components/buttons/HamburgerButton";
 
 export default function Navbar() {
   return (
-    <nav className="flex w-full h-[10svh] items-center justify-between px-3">
+    <nav className="flex w-full h-[10svh] items-center justify-between px-2">
       <div className="flex items-center w-fit h-fit">
         <Image
           src={geotera}
