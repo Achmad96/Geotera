@@ -5,8 +5,8 @@ export default function HeroSection() {
     return (
         <section id="#home" className="flex w-full max-w-full h-[90svh] items-center justify-center max-xl:justify-around max-lg:flex-col-reverse max-lg:pt-10">
             <div className="flex flex-col gap-5 pt-5 max-sm:ml-5">
-                <p className="text-4xl w-[30rem] font-bold max-lg:text-3xl max-sm:text-xl max-sm:w-80 ">
-                    Geotera, Clean Solution for Your <span className="text-[#2FBC9B]">Healthy</span> Environment!
+                <p className="text-4xl w-[30rem] font-bold max-lg:text-3xl max-sm:text-2xl max-sm:w-80 ">
+                    Clean Solution for Your <span className="text-[#2FBC9B]">Healthy</span> Environment!
                 </p>
                 <div className="flex flex-col gap-5 pb-24">
                     <div className="flex flex-col gap-3">
@@ -33,7 +33,7 @@ export default function HeroSection() {
                     </svg>
                 </div>
             </div>
-            <Image src={Vector} alt="Vector" priority className="-z-10 mb-16 w-[35rem] h-[35rem] max-xl:w-[30rem] max-xl:h-[30rem] max-lg:w-80 max-lg:h-80 max-sm:w-64 max-sm:h-64" />
+            <Image src={Vector} alt="Vector" priority className="-z-10 mb-16 w-[35rem] h-[35rem] max-xl:w-[30rem] max-xl:h-[30rem] max-lg:w-80 max-lg:h-80 max-sm:w-64 max-sm:h-64 max-sm:mb-7" />
             <svg className="absolute right-0 -z-20 max-xl:collapse" xmlns="http://www.w3.org/2000/svg" width="850" height="970" viewBox="0 0 850 970" fill="none">
                 <path
                     d="M294.5 230.5C296.549 157.289 455.881 17.6807 547.911 -44.9951L848.19 -78L877.5 952.5C813.301 940.665 652.728 884.096 575.69 912.5C479.392 948.005 351.426 1005.51 278.69 939.5C205.954 873.49 122.995 892.768 31.8197 770.75C-59.356 648.732 63.844 468.237 178.5 398.824C267.82 344.75 291.939 322.013 294.5 230.5Z"

@@ -5,10 +5,8 @@ import React, { useContext, useReducer, useEffect, FormEvent, KeyboardEvent, Cha
 import { OrderModalContext, OrderModalContextType } from "@/providers/OrderModalProvider";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "@/lib/firebase";
-import { AuthContext, AuthContextType } from "@/providers/AuthProvider";
 import { OrderStatus, OrderTypes } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
-import { IoIosCloseCircleOutline } from "react-icons/io";
 import { arrayUnion, doc, setDoc } from "firebase/firestore";
 
 import ConfirmModal from "@/components/modals/ConfirmModal";
@@ -20,6 +18,7 @@ import NotesInput from "@/components/inputs/CustomInput";
 import { isPickUpTimeValid } from "@/utils/time";
 import { toast } from "react-toastify";
 import { defaultToastConfig } from "@/utils/toastConfig";
+import { useAuth } from "@/providers/AuthProvider";
 
 export type OrderModalStateType = {
     formData: OrderTypes;
@@ -61,8 +60,8 @@ const formReducer = (state: OrderModalStateType, action: OrderModalActionType): 
 
 const OrderModal = () => {
     const { isModalOpen, setIsModalOpen } = useContext(OrderModalContext) as OrderModalContextType;
-    const { user } = useContext(AuthContext) as AuthContextType;
     const [state, dispatch] = useReducer(formReducer, initialState);
+    const { isAuth, user } = useAuth();
     useEffect(() => {
         if (isModalOpen) {
             document.documentElement.style.overflowY = "hidden";
@@ -73,13 +72,20 @@ const OrderModal = () => {
             document.documentElement.style.overflowY = "auto";
         };
     }, [isModalOpen]);
+
     const onOrder = async () => {
         dispatch({
             type: "orderFormData",
             payload: { id: uuidv4(), status: OrderStatus.Pending },
         });
         try {
-            const orderDocs = doc(db, `users/${user!.uid}`);
+            if (!isAuth) {
+                throw new Error("User not found.");
+            }
+            if (!state.formData.id) {
+                throw new Error("ID Order is EMPTY.");
+            }
+            const orderDocs = doc(db, `users/${user?.uid}`);
             await setDoc(orderDocs, { orders: arrayUnion(state.formData) }, { merge: true });
             document.querySelectorAll<HTMLInputElement>("form input,select,textarea").forEach((v: HTMLInputElement) => (v.value = ""));
             toast.success("Successfully place an order!", defaultToastConfig);
@@ -116,7 +122,11 @@ const OrderModal = () => {
                         onKeyDown={(e: KeyboardEvent<HTMLDivElement>) => e.key === "Escape" && setIsModalOpen(false)}
                         className="absolute flex flex-col w-[60%] min-h-64 z-40 gap-10 bg-white rounded-xl p-10 pl-24 pb-5 max-lg:pl-20 max-sm:pl-10 max-sm:w-[90%]"
                     >
-                        <IoIosCloseCircleOutline className="absolute top-2 right-5 w-10 h-10 z-50" onClick={() => setIsModalOpen(false)} />
+                        <button className="absolute top-2 right-5 z-50 daisy-btn daisy-btn-circle daisy-btn-outline" onClick={() => setIsModalOpen(false)}>
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
                         <LocationInput dispatch={dispatch} />
                         <WeightInput state={state} dispatch={dispatch} />
                         <DateInput
