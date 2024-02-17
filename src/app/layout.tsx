@@ -2,14 +2,15 @@ import "@/app/globals.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import type { Metadata } from "next";
-
-import { getCurrentUser, isUserAuthenticated } from "@/lib/firebase/firebase-admin";
-import { UserRecord } from "firebase-admin/auth";
-
 import NextTopLoader from "nextjs-toploader";
 import Providers from "@/providers/Providers";
 import Navbar from "@/components/sections/Navbar";
+
 import { ReactNode } from "react";
+import { getCurrentUser, isUserAuthenticated } from "@/lib/firebase/firebase-admin";
+import { cookies } from "next/headers";
+
+import Loading from "./loading";
 
 export const metadata: Metadata = {
     title: "Geotera",
@@ -17,16 +18,22 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
-    const isAuth: boolean | null = await isUserAuthenticated();
-    const user: UserRecord | null = await getCurrentUser();
-
+    const user = await getCurrentUser();
+    const isAuth = await isUserAuthenticated();
+    const cookie = cookies().get("loading");
     return (
         <html lang="en">
             <body>
                 <NextTopLoader color="#2FBC9B" />
-                <Providers isAuth={isAuth} user={JSON.parse(JSON.stringify(user))}>
-                    <Navbar />
-                    {children}
+                <Providers authProps={{ user: JSON.parse(JSON.stringify(user)), isAuth }}>
+                    {cookie?.value ? (
+                        <Loading />
+                    ) : (
+                        <>
+                            <Navbar />
+                            {children}
+                        </>
+                    )}
                 </Providers>
             </body>
         </html>

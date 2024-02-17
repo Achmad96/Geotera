@@ -1,13 +1,13 @@
 "use client";
-import { AuthContext, AuthContextType } from "@/providers/AuthProvider";
 import { defaultToastConfig } from "@/utils/toastConfig";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import { OrderModalContext, OrderModalContextType } from "@/providers/OrderModalProvider";
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function OrderButton() {
-    const { isAuth } = useContext(AuthContext) as AuthContextType;
     const { setIsModalOpen } = useContext(OrderModalContext) as OrderModalContextType;
+    const { isAuth } = useAuth();
     return (
         <button
             className="btn-geo"

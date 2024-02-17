@@ -1,8 +1,8 @@
 "use client";
-import { useContext, useState } from "react";
+
+import { useState } from "react";
 import { Variants, motion } from "framer-motion";
-import { AuthContext, AuthContextType } from "@/providers/AuthProvider";
-import { signInWithGoogle, signOut } from "@/lib/firebase/auth";
+import { useAuth } from "@/providers/AuthProvider";
 import { useRouter } from "next/navigation";
 
 const itemVariant: Variants = {
@@ -15,22 +15,10 @@ const itemVariant: Variants = {
     closed: { opacity: 0, x: 50 },
 };
 
-const DropdownLeft = ({ isOpenState }: { isOpenState: [boolean, (v: boolean) => void] }) => {
+const DropdownLeft = ({ isOpenState, handlerSign }: { isOpenState: [boolean, (v: boolean) => void]; handlerSign: Function }) => {
     const [isMenuOpen, setIsMenuOpen] = isOpenState;
-    const { isAuth } = useContext(AuthContext) as AuthContextType;
+    const { isAuth } = useAuth();
     const router = useRouter();
-
-    const handleSignIn = () => {
-        signInWithGoogle()
-            .then(() => router.refresh())
-            .catch((err: any) => console.log(err.message));
-    };
-    const handleSignOut = () => {
-        signOut()
-            .then(() => router.refresh())
-            .catch((err: any) => console.log(err.message));
-    };
-
     return (
         <motion.ul
             className="flex flex-col absolute bg-base-100 w-[90%] border top-16 right-3 justify-center text-center rounded-box z-[1] h-52 shadow [&>*]:p-2 gap-2"
@@ -75,18 +63,18 @@ const DropdownLeft = ({ isOpenState }: { isOpenState: [boolean, (v: boolean) => 
             </motion.li>
             <motion.li
                 variants={itemVariant}
-                onClick={() => {
+                onClick={async () => {
                     setIsMenuOpen(false);
-                    !isAuth ? handleSignIn() : handleSignOut();
+                    handlerSign();
                 }}
             >
-                {isAuth ? "Sign out" : "Sign in with Google"}
+                {isAuth ? "Sign out" : "Sign in"}
             </motion.li>
         </motion.ul>
     );
 };
 
-export default function HamburgerButton() {
+export default function HamburgerButton({ handlerSign }: { handlerSign: Function }) {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     return (
         <div className="sm:collapse sm:hidden">
@@ -99,7 +87,7 @@ export default function HamburgerButton() {
                     <polygon points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
                 </svg>
             </label>
-            <DropdownLeft isOpenState={[isMenuOpen, setIsMenuOpen]} />
+            <DropdownLeft handlerSign={handlerSign} isOpenState={[isMenuOpen, setIsMenuOpen]} />
         </div>
     );
 }

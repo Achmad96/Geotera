@@ -1,15 +1,13 @@
 "use client";
-
 import { ReactNode } from "react";
-import AuthProvider, { AuthContextType } from "@/providers/AuthProvider";
+
 import OrderModalProvider from "@/providers/OrderModalProvider";
+import AuthProvider, { AuthProviderInterface } from "@/providers/AuthProvider";
 
-interface ProvidersInterface extends AuthContextType {
-  children: ReactNode;
-}
-
-export default ({ children, user, isAuth }: ProvidersInterface): ReactNode => (
-  <AuthProvider user={user} isAuth={isAuth}>
-    <OrderModalProvider>{children}</OrderModalProvider>
-  </AuthProvider>
-);
+export default ({ children, authProps }: { children: ReactNode; authProps: AuthProviderInterface }): ReactNode => {
+    return (
+        <AuthProvider authProps={authProps}>
+            <OrderModalProvider>{children}</OrderModalProvider>
+        </AuthProvider>
+    );
+};
