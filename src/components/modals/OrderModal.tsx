@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useContext, useReducer, useEffect, FormEvent, KeyboardEvent, ChangeEvent } from "react";
+import React, { useReducer, useEffect, FormEvent, KeyboardEvent, ChangeEvent } from "react";
 
-import { OrderModalContext, OrderModalContextType } from "@/providers/OrderModalProvider";
+import { useOrderModal } from "@/providers/OrderModalProvider";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "@/lib/firebase";
 import { OrderStatus, OrderTypes } from "@/types";
@@ -59,7 +59,7 @@ const formReducer = (state: OrderModalStateType, action: OrderModalActionType): 
 };
 
 const OrderModal = () => {
-    const { isModalOpen, setIsModalOpen } = useContext(OrderModalContext) as OrderModalContextType;
+    const { isModalOpen, setIsModalOpen } = useOrderModal();
     const [state, dispatch] = useReducer(formReducer, initialState);
     const { isAuth, user } = useAuth();
     useEffect(() => {

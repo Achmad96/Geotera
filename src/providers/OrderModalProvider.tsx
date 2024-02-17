@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState, Dispatch, SetStateAction } from "react";
+import { ReactNode, createContext, useState, Dispatch, SetStateAction, useContext } from "react";
 
 export type OrderModalContextType = {
     isModalOpen?: boolean;
@@ -10,3 +10,6 @@ export default function OrderModalProvider({ children }: { children: ReactNode }
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     return <OrderModalContext.Provider value={{ isModalOpen, setIsModalOpen }}>{children}</OrderModalContext.Provider>;
 }
+export const useOrderModal = () => {
+    return useContext(OrderModalContext) as OrderModalContextType;
+};
