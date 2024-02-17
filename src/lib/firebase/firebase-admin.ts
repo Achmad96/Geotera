@@ -39,20 +39,6 @@ export async function isUserAuthenticated(session: string | undefined = undefine
     }
 }
 
-// async function delay(milliseconds = 0, returnValue: boolean) {
-//     return new Promise(done => setTimeout(() => done(returnValue), milliseconds));
-// }
-
-// export async function isFinished(promise: Promise<Object>) {
-//     return await Promise.race([
-//         delay(0, false),
-//         promise.then(
-//             () => true,
-//             () => false
-//         ),
-//     ]);
-// }
-
 async function getSession() {
     try {
         return cookies().get("__session")?.value;
