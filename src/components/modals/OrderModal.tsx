@@ -13,8 +13,8 @@ import ConfirmModal from "@/components/modals/ConfirmModal";
 
 import LocationInput from "@/components/inputs/LocationInput";
 import WeightInput from "@/components/inputs/WeightInput";
-import DateInput from "@/components/inputs/CustomInput";
-import NotesInput from "@/components/inputs/CustomInput";
+import DateInput from "@/components/inputs/DateInput";
+import NotesInput from "@/components/inputs/NotesInput";
 import { isPickUpTimeValid } from "@/utils/time";
 import { toast } from "react-toastify";
 import { defaultToastConfig } from "@/utils/toastConfig";
@@ -83,7 +83,7 @@ const OrderModal = () => {
                 throw new Error("User not found.");
             }
             if (!state.formData.id) {
-                throw new Error("ID Order is EMPTY.");
+                throw new Error("Order ID is EMPTY.");
             }
             const orderDocs = doc(db, `users/${user?.uid}`);
             await setDoc(orderDocs, { orders: arrayUnion(state.formData) }, { merge: true });
@@ -132,7 +132,7 @@ const OrderModal = () => {
                         <DateInput
                             name="date"
                             type="datetime-local"
-                            required={true}
+                            label="date"
                             onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                 const date = new Date(e.target.value);
                                 if (isPickUpTimeValid(date)) {
@@ -150,7 +150,6 @@ const OrderModal = () => {
                         <NotesInput
                             name="notes"
                             label="Notes (optional)"
-                            isTextArea={true}
                             placeholder="Notes to rubbish collectors"
                             required={false}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => {
