@@ -61,7 +61,7 @@ const formReducer = (state: OrderModalStateType, action: OrderModalActionType): 
 const OrderModal = () => {
     const { isModalOpen, setIsModalOpen } = useOrderModal();
     const [state, dispatch] = useReducer(formReducer, initialState);
-    const { isAuth, user } = useAuth();
+    const { user } = useAuth();
     useEffect(() => {
         if (isModalOpen) {
             document.documentElement.style.overflowY = "hidden";
@@ -79,7 +79,7 @@ const OrderModal = () => {
             payload: { id: uuidv4(), status: OrderStatus.Pending },
         });
         try {
-            if (!isAuth) {
+            if (!user) {
                 throw new Error("User not found.");
             }
             if (!state.formData.id) {
