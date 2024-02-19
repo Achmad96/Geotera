@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import { Variants, motion } from "framer-motion";
 import { useAuth } from "@/providers/AuthProvider";
 import { useRouter } from "next/navigation";
@@ -15,7 +15,7 @@ const itemVariant: Variants = {
     closed: { opacity: 0, x: 50 },
 };
 
-const DropdownLeft = ({ isOpenState, handlerSign }: { isOpenState: [boolean, (v: boolean) => void]; handlerSign: Function }) => {
+const DropdownLeft = ({ isOpenState, handlerSign }: { isOpenState: [boolean, Dispatch<boolean>]; handlerSign: Function }) => {
     const [isMenuOpen, setIsMenuOpen] = isOpenState;
     const { isAuth } = useAuth();
     const router = useRouter();
