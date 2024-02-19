@@ -4,9 +4,9 @@ type PropsType = {
     name: string;
     type?: HTMLInputTypeAttribute;
     label?: string;
-    onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     placeholder?: string;
     required?: boolean;
+    onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 };
 
 const DateInput = ({ name, type, onChange, label, placeholder = "", required = true }: PropsType) => {
