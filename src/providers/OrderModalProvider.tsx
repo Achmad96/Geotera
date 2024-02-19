@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useState, Dispatch, SetStateAction, useContext } from "react";
 
-export type OrderModalContextType = {
+type OrderModalContextType = {
     isModalOpen?: boolean;
     setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 };
