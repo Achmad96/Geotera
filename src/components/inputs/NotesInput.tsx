@@ -1,4 +1,4 @@
-import { ChangeEventHandler, HTMLInputTypeAttribute, FormEvent, KeyboardEvent, useRef } from "react";
+import { ChangeEventHandler, FormEvent, KeyboardEvent, useRef } from "react";
 
 type PropsType = {
     name: string;
