@@ -13,7 +13,6 @@ const NotesInput = ({ name, onChange, label, placeholder = "", required = false 
     return (
         <div className="flex flex-col justify-start gap-5">
             {label && <p>{label}</p>}
-            (
             <textarea
                 ref={ref}
                 name={name}
@@ -36,7 +35,6 @@ const NotesInput = ({ name, onChange, label, placeholder = "", required = false 
                     }
                 }}
             />
-            )
         </div>
     );
 };
