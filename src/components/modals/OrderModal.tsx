@@ -151,7 +151,6 @@ const OrderModal = () => {
                             name="notes"
                             label="Notes (optional)"
                             placeholder="Notes to rubbish collectors"
-                            required={false}
                             onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                 if (e.target.value.length <= 100) {
                                     dispatch({

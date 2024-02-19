@@ -9,11 +9,11 @@ type PropsType = {
     onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 };
 
-const DateInput = ({ name, type, onChange, label, placeholder = "", required = true }: PropsType) => {
+const DateInput = ({ name, type, onChange, label, placeholder = "" }: PropsType) => {
     return (
         <div className="flex flex-col justify-start gap-5">
             {label && <p>{label}</p>}
-            <input name={name} type={type} placeholder={placeholder} className="w-[90%] h-10 outline-none border-b pl-2" onChange={onChange} required={required} autoComplete="off" />
+            <input name={name} type={type} placeholder={placeholder} className="w-[90%] h-10 outline-none border-b pl-2" onChange={onChange} autoComplete="off" required />
         </div>
     );
 };

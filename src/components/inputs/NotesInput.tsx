@@ -8,7 +8,7 @@ type PropsType = {
     required?: boolean;
 };
 
-const NotesInput = ({ name, onChange, label, placeholder = "", required = false }: PropsType) => {
+const NotesInput = ({ name, onChange, label, placeholder = "" }: PropsType) => {
     const ref = useRef<HTMLTextAreaElement>(null);
     return (
         <div className="flex flex-col justify-start gap-5">
@@ -19,7 +19,6 @@ const NotesInput = ({ name, onChange, label, placeholder = "", required = false 
                 placeholder={placeholder}
                 className="w-[90%] min-h-12 max-h-[7.5rem] overflow-y-hidden outline-none border-b pl-2 resize-none"
                 onChange={onChange}
-                required={required}
                 autoComplete="off"
                 rows={1}
                 maxLength={100}
