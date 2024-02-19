@@ -7,7 +7,7 @@ type PropsType = {
     onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 };
 
-const NotesInput = ({ name, onChange, label, placeholder = "" }: PropsType) => {
+const NotesInput = ({ name, label, placeholder = "", onChange }: PropsType) => {
     const ref = useRef<HTMLTextAreaElement>(null);
     return (
         <div className="flex flex-col justify-start gap-5">
