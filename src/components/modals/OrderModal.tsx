@@ -131,7 +131,6 @@ const OrderModal = () => {
                         <WeightInput state={state} dispatch={dispatch} />
                         <DateInput
                             name="date"
-                            type="datetime-local"
                             label="date"
                             onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                 const date = new Date(e.target.value);

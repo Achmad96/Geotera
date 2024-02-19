@@ -3,9 +3,8 @@ import { ChangeEventHandler, HTMLInputTypeAttribute, FormEvent, KeyboardEvent, u
 type PropsType = {
     name: string;
     label?: string;
-    onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     placeholder?: string;
-    required?: boolean;
+    onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 };
 
 const NotesInput = ({ name, onChange, label, placeholder = "" }: PropsType) => {

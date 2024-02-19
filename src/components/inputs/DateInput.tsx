@@ -2,18 +2,16 @@ import { ChangeEventHandler, HTMLInputTypeAttribute, FormEvent, KeyboardEvent, u
 
 type PropsType = {
     name: string;
-    type?: HTMLInputTypeAttribute;
     label?: string;
     placeholder?: string;
-    required?: boolean;
     onChange: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
 };
 
-const DateInput = ({ name, type, onChange, label, placeholder = "" }: PropsType) => {
+const DateInput = ({ name, label, placeholder = "", onChange }: PropsType) => {
     return (
         <div className="flex flex-col justify-start gap-5">
             {label && <p>{label}</p>}
-            <input name={name} type={type} placeholder={placeholder} className="w-[90%] h-10 outline-none border-b pl-2" onChange={onChange} autoComplete="off" required />
+            <input name={name} type={"datetime-local"} placeholder={placeholder} className="w-[90%] h-10 outline-none border-b pl-2" onChange={onChange} autoComplete="off" required />
         </div>
     );
 };
