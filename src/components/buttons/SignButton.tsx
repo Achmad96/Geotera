@@ -6,20 +6,22 @@ import { useRouter } from "next/navigation";
 import { setCookie } from "nookies";
 
 export default function SignInOutButton() {
-    const router = useRouter();
-    const { isAuth } = useAuth();
+  const router = useRouter();
+  const { isAuth } = useAuth();
 
-    const handlerSign = async () => {
-        setCookie(null, "loading", "true");
-        !isAuth ? await signInWithGoogle() : await signOut();
-        router.refresh();
-    };
-    return (
-        <>
-            <button onClick={handlerSign} className={`w-fit rounded-full max-sm:collapse border-2 border-black py-2 px-7`}>
-                {!isAuth ? "Sign in" : "Sign out"}
-            </button>
-            <HamburgerButton handlerSign={handlerSign} />
-        </>
-    );
+  const handlerSign = async () => {
+    !isAuth ? await signInWithGoogle() : await signOut();
+    router.refresh();
+  };
+  return (
+    <>
+      <button
+        onClick={handlerSign}
+        className={`w-fit rounded-full border-2 border-black px-7 py-2 max-sm:collapse`}
+      >
+        {!isAuth ? "Sign in" : "Sign out"}
+      </button>
+      <HamburgerButton handlerSign={handlerSign} />
+    </>
+  );
 }
